@@ -4,7 +4,7 @@ export const routeConfig = [
   {
     label: "Dashboard",
     icon: LayoutDashboard,
-    href: "/dashboard",
+    href: "/create-store",
     color: "secondary",
   },
   {

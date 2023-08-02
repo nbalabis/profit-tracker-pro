@@ -4,6 +4,10 @@ import prismadb from "./prismadb";
 
 const DAY_IN_MS = 86_400_000;
 
+export const checkFreeTrial = async () => {
+  return true;
+};
+
 export const checkSubscription = async () => {
   const { userId } = auth();
 

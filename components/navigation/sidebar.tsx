@@ -6,17 +6,20 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 import { cn } from "@/lib/utils";
+import { Store } from "@prisma/client";
 import { siteConfig } from "@/config/site";
 import { routeConfig } from "@/config/docs";
 import SubscriptionButton from "@/components/subscription-button";
+import StoreSelector from "./store-selector";
 
 const montserrat = Montserrat({ weight: "600", subsets: ["latin"] });
 
 interface SidebarProps {
   isSubscribed: boolean;
+  ownedStores: Store[];
 }
 
-const Sidebar = ({ isSubscribed = false }: SidebarProps) => {
+const Sidebar = ({ isSubscribed = false, ownedStores = [] }: SidebarProps) => {
   const pathname = usePathname();
 
   return (
@@ -55,6 +58,9 @@ const Sidebar = ({ isSubscribed = false }: SidebarProps) => {
           <SubscriptionButton isSubscribed={isSubscribed} />
         </div>
       )}
+      <div className="p-6 text-center">
+        <StoreSelector stores={ownedStores} />
+      </div>
     </div>
   );
 };

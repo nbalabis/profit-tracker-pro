@@ -5,6 +5,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
 import axios from "axios";
+import { useRouter } from "next/navigation";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -24,6 +25,7 @@ const formSchema = z.object({
 
 const CreateStorePage = () => {
   const { toast } = useToast();
+  const router = useRouter();
 
   const [isLoading, setIsLoading] = useState(false);
 
@@ -36,9 +38,15 @@ const CreateStorePage = () => {
     try {
       setIsLoading(true);
 
-      await axios.post("/api/store", { name: values.name });
+      const response = await axios.post("/api/store", { name: values.name });
 
       form.reset();
+      router.push(`/${response.data.id}`);
+      router.refresh();
+      toast({
+        title: "Success!",
+        description: "Your store has been successfully created.",
+      });
     } catch (error: any) {
       if (error?.response?.status === 403) {
         // TODO: Open Upgrade Modal

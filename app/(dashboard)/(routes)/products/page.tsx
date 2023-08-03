@@ -1,14 +1,14 @@
 import { getAllStores } from "@/actions/stores";
 import { redirect } from "next/navigation";
 
-const EmptyDashboardPage = async () => {
+const EmptyProductsPage = async () => {
   const ownedStores = await getAllStores();
 
   if (ownedStores.length > 0) {
-    redirect(`/dashboard/${ownedStores[0].id}`);
+    redirect(`/products/${ownedStores[0].id}`);
   } else {
     redirect("/create-store");
   }
 };
 
-export default EmptyDashboardPage;
+export default EmptyProductsPage;

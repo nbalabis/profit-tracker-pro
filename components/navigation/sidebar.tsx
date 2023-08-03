@@ -3,7 +3,7 @@
 import { Montserrat } from "next/font/google";
 import Image from "next/image";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { useParams, usePathname } from "next/navigation";
 
 import { cn } from "@/lib/utils";
 import { Store } from "@prisma/client";
@@ -11,6 +11,7 @@ import { siteConfig } from "@/config/site";
 import { routeConfig } from "@/config/docs";
 import SubscriptionButton from "@/components/subscription-button";
 import StoreSelector from "./store-selector";
+import { Separator } from "../ui/separator";
 
 const montserrat = Montserrat({ weight: "600", subsets: ["latin"] });
 
@@ -21,6 +22,7 @@ interface SidebarProps {
 
 const Sidebar = ({ isSubscribed = false, ownedStores = [] }: SidebarProps) => {
   const pathname = usePathname();
+  const { storeId } = useParams();
 
   return (
     <div className="flex h-full flex-col space-y-4 bg-primary py-4 text-secondary">
@@ -33,14 +35,20 @@ const Sidebar = ({ isSubscribed = false, ownedStores = [] }: SidebarProps) => {
             {siteConfig.name}
           </h1>
         </Link>
+        <Separator className="mb-3 mt-6 bg-muted-foreground" />
         <div className="space-y-1">
           {routeConfig.map((route) => (
             <Link
-              href={route.href}
+              href={
+                route.isStoreSpecific && storeId
+                  ? `${route.href}/${storeId}`
+                  : route.href
+              }
               key={route.href}
               className={cn(
                 "group flex w-full cursor-pointer justify-start rounded-lg p-3 text-sm font-medium transition hover:bg-secondary/10 hover:text-secondary",
-                pathname === route.href
+                pathname === route.href ||
+                  (route.isStoreSpecific && pathname.startsWith(route.href))
                   ? "bg-secondary/10 text-secondary"
                   : "text-muted-foreground",
               )}
@@ -58,9 +66,11 @@ const Sidebar = ({ isSubscribed = false, ownedStores = [] }: SidebarProps) => {
           <SubscriptionButton isSubscribed={isSubscribed} />
         </div>
       )}
-      <div className="p-6 text-center">
-        <StoreSelector stores={ownedStores} />
-      </div>
+      {ownedStores.length > 0 && (
+        <div className="ml-1">
+          <StoreSelector stores={ownedStores} />
+        </div>
+      )}
     </div>
   );
 };

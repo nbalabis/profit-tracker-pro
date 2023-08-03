@@ -33,7 +33,7 @@ const StoreSelector: React.FC<StoreSelectorProps> = ({ stores, className }) => {
   const currentStore = stores.find((store) => store.id === params.storeId);
 
   const setCurrentStore = (store: Store) => {
-    router.push(`/${store.id}`);
+    router.push(`/dashboard/${store.id}`);
   };
 
   return (
@@ -58,7 +58,7 @@ const StoreSelector: React.FC<StoreSelectorProps> = ({ stores, className }) => {
               {currentStore.name}
             </div>
           ) : (
-            <div>Select a store</div>
+            <div className="text-primary">Select a store</div>
           )}
           <ChevronsDownUp className="ml-auto h-4 w-4 shrink-0 opacity-50" />
         </Button>

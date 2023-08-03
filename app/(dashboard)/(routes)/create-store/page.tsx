@@ -41,7 +41,7 @@ const CreateStorePage = () => {
       const response = await axios.post("/api/store", { name: values.name });
 
       form.reset();
-      router.push(`/${response.data.id}`);
+      router.push(`/dashboard/${response.data.id}`);
       router.refresh();
       toast({
         title: "Success!",

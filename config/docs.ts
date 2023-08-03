@@ -4,13 +4,22 @@ export const routeConfig = [
   {
     label: "Dashboard",
     icon: LayoutDashboard,
-    href: "/create-store",
+    href: "/dashboard",
+    isStoreSpecific: true,
+    color: "secondary",
+  },
+  {
+    label: "Products",
+    icon: LayoutDashboard,
+    href: "/products",
+    isStoreSpecific: true,
     color: "secondary",
   },
   {
     label: "Settings",
     icon: Settings,
     href: "/settings",
+    isStoreSpecific: false,
     color: "secondary",
   },
 ];

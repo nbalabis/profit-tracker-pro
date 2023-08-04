@@ -1,9 +1,11 @@
 "use client";
 
 import { useState } from "react";
-import { useParams, useRouter } from "next/navigation";
+import { useParams, usePathname, useRouter } from "next/navigation";
+import { Check, ChevronDown, Store as StoreIcon } from "lucide-react";
 
 import { cn } from "@/lib/utils";
+import { Store } from "@prisma/client";
 import { Button } from "@/components/ui/button";
 import {
   Popover,
@@ -16,8 +18,6 @@ import {
   CommandItem,
   CommandList,
 } from "@/components/ui/command";
-import { Store } from "@prisma/client";
-import { Check, ChevronDown, Store as StoreIcon } from "lucide-react";
 
 interface StoreSelectorProps {
   stores: Store[];
@@ -27,12 +27,18 @@ interface StoreSelectorProps {
 const StoreSelector: React.FC<StoreSelectorProps> = ({ stores, className }) => {
   const router = useRouter();
   const params = useParams();
+  const pathname = usePathname();
   const [open, setOpen] = useState(false);
 
   const currentStore = stores.find((store) => store.id === params.storeId);
 
   const setCurrentStore = (store: Store) => {
-    router.push(`/dashboard/${store.id}`);
+    if (currentStore) {
+      const newPathname = pathname.replace(currentStore.id, store.id);
+      router.push(newPathname);
+    } else {
+      router.push(`/dashboard/${store.id}`);
+    }
   };
 
   return (

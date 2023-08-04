@@ -1,4 +1,4 @@
-import { LayoutDashboard, Settings } from "lucide-react";
+import { LayoutDashboard, Package, Settings } from "lucide-react";
 
 export const routeConfig = [
   {
@@ -10,7 +10,7 @@ export const routeConfig = [
   },
   {
     label: "Products",
-    icon: LayoutDashboard,
+    icon: Package,
     href: "/products",
     isStoreSpecific: true,
     color: "secondary",

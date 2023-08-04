@@ -11,7 +11,6 @@ import { siteConfig } from "@/config/site";
 import { routeConfig } from "@/config/docs";
 import SubscriptionButton from "@/components/subscription-button";
 import StoreSelector from "./store-selector";
-import { Separator } from "../ui/separator";
 
 const montserrat = Montserrat({ weight: "600", subsets: ["latin"] });
 
@@ -35,7 +34,6 @@ const Sidebar = ({ isSubscribed = false, ownedStores = [] }: SidebarProps) => {
             {siteConfig.name}
           </h1>
         </Link>
-        <Separator className="mb-3 mt-6 bg-muted-foreground" />
         <div className="space-y-1">
           {routeConfig.map((route) => (
             <Link
@@ -62,12 +60,12 @@ const Sidebar = ({ isSubscribed = false, ownedStores = [] }: SidebarProps) => {
         </div>
       </div>
       {!isSubscribed && (
-        <div className="p-6 text-center">
+        <div className="px-4 text-center">
           <SubscriptionButton isSubscribed={isSubscribed} />
         </div>
       )}
       {ownedStores.length > 0 && (
-        <div className="ml-1">
+        <div className="px-3 py-2">
           <StoreSelector stores={ownedStores} />
         </div>
       )}

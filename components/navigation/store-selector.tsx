@@ -18,7 +18,7 @@ import {
   CommandList,
 } from "@/components/ui/command";
 import { Store } from "@prisma/client";
-import { Check, ChevronsDownUp, Store as StoreIcon } from "lucide-react";
+import { Check, ChevronDown, Store as StoreIcon } from "lucide-react";
 
 interface StoreSelectorProps {
   stores: Store[];
@@ -41,31 +41,30 @@ const StoreSelector: React.FC<StoreSelectorProps> = ({ stores, className }) => {
       {/* Display selected store as popover trigger */}
       <PopoverTrigger asChild>
         <Button
-          variant="outline"
+          variant="ghost"
           size="sm"
           role="combobox"
           aria-expanded={open}
           aria-label="Select a team"
-          className={cn("w-[200px] justify-between", className)}
+          className={cn(
+            "group flex w-full cursor-pointer justify-start rounded-lg p-3 py-5 text-sm font-medium text-muted-foreground transition hover:bg-secondary/10 hover:text-secondary",
+            className,
+          )}
         >
           {currentStore ? (
-            <div className="flex flex-row text-primary">
-              <Avatar className="mr-2 h-5 w-5">
-                <AvatarFallback>
-                  <StoreIcon />
-                </AvatarFallback>
-              </Avatar>
+            <div className="flex flex-1 items-center">
+              <StoreIcon className={"mr-3 h-5 w-5"} />
               {currentStore.name}
             </div>
           ) : (
-            <div className="text-primary">Select a store</div>
+            <div className="flex flex-1 items-center">Select a store</div>
           )}
-          <ChevronsDownUp className="ml-auto h-4 w-4 shrink-0 opacity-50" />
+          <ChevronDown className="ml-auto h-4 w-4 shrink-0 opacity-50" />
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="w-[200px] p-0">
+      <PopoverContent className="w-[264px] border-secondary/10 bg-secondary/10 p-0">
         <Command>
-          <CommandList>
+          <CommandList className="bg-primary">
             {/* Dispaly owned stores */}
             {stores.length > 0 && (
               <CommandGroup>
@@ -76,14 +75,12 @@ const StoreSelector: React.FC<StoreSelectorProps> = ({ stores, className }) => {
                       setCurrentStore(store);
                       setOpen(false);
                     }}
-                    className="text-sm"
+                    className="text-sm text-muted-foreground transition aria-selected:bg-secondary/10 aria-selected:text-secondary"
                   >
-                    <Avatar className="mr-2 h-5 w-5">
-                      <AvatarFallback>
-                        <StoreIcon />
-                      </AvatarFallback>
-                    </Avatar>
-                    {store.name}
+                    <div className="flex flex-1 items-center">
+                      <StoreIcon className={"mr-3 h-5 w-5"} />
+                      {store.name}
+                    </div>
                     <Check
                       className={cn(
                         "ml-auto h-4 w-4",

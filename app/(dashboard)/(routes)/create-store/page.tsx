@@ -50,6 +50,10 @@ const CreateStorePage = () => {
     } catch (error: any) {
       if (error?.response?.status === 403) {
         // TODO: Open Upgrade Modal
+        toast({
+          title: "Upgrade Required",
+          description: "You must upgrade your account to create more stores.",
+        });
       } else {
         toast({
           title: "Uh oh! Something went wrong.",

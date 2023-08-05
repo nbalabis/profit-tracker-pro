@@ -1,0 +1,4 @@
+const TRIAL_STORE_LIMIT: number = 1;
+const TRIAL_PRODUCT_LIMIT: number = 50;
+
+export { TRIAL_STORE_LIMIT, TRIAL_PRODUCT_LIMIT };

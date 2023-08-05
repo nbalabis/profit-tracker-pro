@@ -2,7 +2,10 @@ import { auth } from "@clerk/nextjs";
 import { NextResponse } from "next/server";
 
 import prismadb from "@/lib/prismadb";
-import { checkFreeTrial, checkSubscription } from "@/lib/subscription";
+import {
+  checkRemainingTrialStores,
+  checkSubscription,
+} from "@/lib/subscription";
 
 export async function POST(req: Request) {
   try {
@@ -18,7 +21,7 @@ export async function POST(req: Request) {
       return new NextResponse("Missing required values", { status: 400 });
     }
 
-    const freeTrial = checkFreeTrial();
+    const freeTrial = await checkRemainingTrialStores();
     const isPro = await checkSubscription();
 
     if (!freeTrial && !isPro) {
@@ -39,6 +42,14 @@ export async function POST(req: Request) {
     const response = await prismadb.store.create({
       data: { ownerId: userId, name },
     });
+
+    if (freeTrial) {
+      await prismadb.userTrial.update({
+        where: { userId },
+        data: { storesRemaining: { decrement: 1 } },
+      });
+    }
+
     return new NextResponse(JSON.stringify(response), { status: 200 });
   } catch (error) {
     console.log("[CREATE_STORE_ERROR]", error);

@@ -27,7 +27,62 @@ model UserSubscription {
 }
 
 model Store {
-  id      String @id @default(cuid())
-  name    String
-  ownerId String
+  id       String    @id @default(cuid())
+  name     String
+  ownerId  String
+  products Product[]
+}
+
+model Product {
+  id          String   @id @default(cuid())
+  name        String
+  storeId     String
+  store       Store    @relation(fields: [storeId], references: [id], onDelete: Cascade)
+  category    Category
+  source      Source
+  sourceDate  DateTime @db.Date()
+  sourcePrice Float
+  status      Status   @default(UNLISTED)
+  saleChannel Channel?
+  saleDate    DateTime @db.Date()
+  salePrice   Float?
+  platformFee Float?
+  tax         Float?
+  shippingFee Float?
+  miscFee     Float?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([storeId])
+}
+
+enum Category {
+  BEAUTY      @map("Beauty")
+  CLOTHING    @map("Clothing")
+  ELECTRONICS @map("Electronics")
+  HOME        @map("Home")
+  TOYS        @map("Toys & Collectibles")
+  SPORTS      @map("Sports & Outdoors")
+  OTHER       @map("Other")
+}
+
+enum Source {
+  GARAGE_SALE  @map("Garage Sale")
+  THRIFT_STORE @map("eBay")
+  ONLINE       @map("Online")
+  OTHER        @map("Other")
+}
+
+enum Status {
+  UNLISTED @map("Unlisted")
+  LISTED   @map("Listed")
+  SOLD     @map("Sold")
+}
+
+enum Channel {
+  EBAY     @map("eBay")
+  ETSY     @map("Etsy")
+  MERCARI  @map("Mercari")
+  POSHMARK @map("Poshmark")
+  OTHER    @map("Other")
 }

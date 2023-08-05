@@ -35,28 +35,31 @@ const Sidebar = ({ isSubscribed = false, ownedStores = [] }: SidebarProps) => {
           </h1>
         </Link>
         <div className="space-y-1">
-          {routeConfig.map((route) => (
-            <Link
-              href={
-                route.isStoreSpecific && storeId
-                  ? `${route.href}/${storeId}`
-                  : route.href
-              }
-              key={route.href}
-              className={cn(
-                "group flex w-full cursor-pointer justify-start rounded-lg p-3 text-sm font-medium transition hover:bg-secondary/10 hover:text-secondary",
-                pathname === route.href ||
-                  (route.isStoreSpecific && pathname.startsWith(route.href))
-                  ? "bg-secondary/10 text-secondary"
-                  : "text-muted-foreground",
-              )}
-            >
-              <div className="flex flex-1 items-center">
-                <route.icon className={cn("mr-3 h-5 w-5", route.color)} />
-                {route.label}
-              </div>
-            </Link>
-          ))}
+          {routeConfig.map(
+            (route) =>
+              route.mainNav && (
+                <Link
+                  href={
+                    route.isStoreSpecific && storeId
+                      ? `${route.href}/${storeId}`
+                      : route.href
+                  }
+                  key={route.href}
+                  className={cn(
+                    "group flex w-full cursor-pointer justify-start rounded-lg p-3 text-sm font-medium transition hover:bg-secondary/10 hover:text-secondary",
+                    pathname === route.href ||
+                      (route.isStoreSpecific && pathname.startsWith(route.href))
+                      ? "bg-secondary/10 text-secondary"
+                      : "text-muted-foreground",
+                  )}
+                >
+                  <div className="flex flex-1 items-center">
+                    <route.icon className={cn("mr-3 h-5 w-5", route.color)} />
+                    {route.label}
+                  </div>
+                </Link>
+              ),
+          )}
         </div>
       </div>
       {!isSubscribed && (

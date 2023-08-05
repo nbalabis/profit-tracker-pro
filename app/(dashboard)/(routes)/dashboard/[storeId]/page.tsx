@@ -12,13 +12,9 @@ const DashboardPage: React.FC<DashboardPageProps> = async ({ params }) => {
 
   return (
     <div className="space-y-3 p-3 md:space-y-6 md:p-6">
-      <h1 className="scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl">
-        {store.name}'s Dashboard
-      </h1>
       <div className="flex gap-5">
-        <p>Last 24h</p>
-        <p className="underline">Last Week</p>
-        <p>Last Month</p>
+        <p>Last Week</p>
+        <p className="underline">Last Month</p>
         <p>Last Year</p>
       </div>
       <div className="flex flex-col gap-3 md:gap-6">

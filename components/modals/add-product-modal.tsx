@@ -1,9 +1,13 @@
+"use client";
+
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useRouter } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { format } from "date-fns";
 import { CalendarIcon } from "lucide-react";
+import axios from "axios";
 
 import { cn } from "@/lib/utils";
 import { useAddProductModal } from "@/hooks/use-add-product-modal";
@@ -42,10 +46,10 @@ import { useToast } from "@/components/ui/use-toast";
 
 // Create zod schema for form validation
 const formSchema = z.object({
-  title: z.string().nonempty({ message: "Product title is required" }),
+  name: z.string().nonempty({ message: "Product name is required" }),
   source: z.string().nonempty({ message: "Product source is required" }),
-  source_date: z.date({ required_error: "Product source date is required" }),
-  source_price: z.coerce
+  sourceDate: z.date({ required_error: "Product source date is required" }),
+  sourcePrice: z.coerce
     .number()
     .nonnegative({ message: "Price cannot be negative" }),
   category: z.string().nonempty({ message: "Product category is required" }),
@@ -55,22 +59,59 @@ const AddProductModal = () => {
   const { toast } = useToast();
   const router = useRouter();
   const modal = useAddProductModal();
+  const { storeId } = useParams();
+
+  const [isLoading, setIsLoading] = useState(false);
 
   // Define a form using react-hook-form and zod
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      title: "",
+      name: "",
       source: "",
-      source_date: new Date(),
-      source_price: undefined,
+      sourceDate: new Date(),
+      sourcePrice: undefined,
       category: "",
     },
   });
 
   // Submit handler
   async function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values);
+    try {
+      setIsLoading(true);
+
+      const response = await axios.post("/api/product", {
+        name: values.name,
+        storeId,
+        source: values.source,
+        sourceDate: values.sourceDate,
+        sourcePrice: values.sourcePrice,
+        category: values.category,
+      });
+
+      form.reset();
+      modal.onClose();
+      router.refresh();
+      toast({
+        title: "Success!",
+        description: "Your product has been added.",
+      });
+    } catch (error: any) {
+      if (error?.response?.status === 403) {
+        // TODO: Open Upgrade Modal
+        toast({
+          title: "Upgrade Required",
+          description: "You must upgrade your account to create more stores.",
+        });
+      } else {
+        toast({
+          title: "Uh oh! Something went wrong.",
+          description: error?.response?.data || "Please try again later.",
+        });
+      }
+    } finally {
+      setIsLoading(false);
+    }
   }
 
   return (
@@ -87,10 +128,10 @@ const AddProductModal = () => {
                 <div className="space-y-2">
                   <FormField
                     control={form.control}
-                    name="title"
+                    name="name"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Title</FormLabel>
+                        <FormLabel>Name</FormLabel>
                         <FormControl>
                           <Input
                             {...field}
@@ -123,7 +164,7 @@ const AddProductModal = () => {
                                 {sources?.map((source) => (
                                   <SelectItem
                                     value={source.value}
-                                    key={source.title}
+                                    key={source.value}
                                   >
                                     {source.title}
                                   </SelectItem>
@@ -137,7 +178,7 @@ const AddProductModal = () => {
 
                       <FormField
                         control={form.control}
-                        name="source_date"
+                        name="sourceDate"
                         render={({ field }) => (
                           <FormItem className="w-1/2">
                             <FormLabel>Source Date</FormLabel>
@@ -185,7 +226,7 @@ const AddProductModal = () => {
                     <div className="flex gap-2">
                       <FormField
                         control={form.control}
-                        name="source_price"
+                        name="sourcePrice"
                         render={({ field }) => (
                           <FormItem className="w-1/2">
                             <FormLabel>Price</FormLabel>
@@ -217,8 +258,8 @@ const AddProductModal = () => {
                               <SelectContent>
                                 {categories?.map((category) => (
                                   <SelectItem
-                                    value={category.title}
-                                    key={category.title}
+                                    value={category.value}
+                                    key={category.value}
                                   >
                                     <span className="pr-2">
                                       {category.icon}
@@ -238,8 +279,14 @@ const AddProductModal = () => {
               </div>
             </div>
             <DialogFooter>
-              <Button type="submit">Add</Button>
-              <Button variant="outline" onClick={() => modal.onClose()}>
+              <Button type="submit" disabled={isLoading}>
+                Add
+              </Button>
+              <Button
+                variant="outline"
+                disabled={isLoading}
+                onClick={() => modal.onClose()}
+              >
                 Cancel
               </Button>
             </DialogFooter>

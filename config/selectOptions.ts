@@ -1,11 +1,11 @@
 export const categories = [
-  { title: "Beauty", icon: "💄", color: "#f43f5e" },
-  { title: "Clothing", icon: "👕", color: "#7c3aed" },
-  { title: "Electronics", icon: "📹", color: "#38bdf8" },
-  { title: "Home", icon: "🏠", color: "#14b8a6" },
-  { title: "Toys & Collectibles", icon: "🧸", color: "#fbbf24" },
-  { title: "Sports", icon: "⚽️", color: "#16a34a" },
-  { title: "Other", icon: "📦", color: "#a1a1aa" },
+  { title: "Beauty", value: "BEAUTY", icon: "💄", color: "#f43f5e" },
+  { title: "Clothing", value: "CLOTHING", icon: "👕", color: "#7c3aed" },
+  { title: "Electronics", value: "ELECTRONICS", icon: "📹", color: "#38bdf8" },
+  { title: "Home", value: "HOME", icon: "🏠", color: "#14b8a6" },
+  { title: "Toys & Collectibles", value: "TOYS", icon: "🧸", color: "#fbbf24" },
+  { title: "Sports", value: "SPORTS", icon: "⚽️", color: "#16a34a" },
+  { title: "Other", value: "OTHER", icon: "📦", color: "#a1a1aa" },
 ];
 
 export const sources = [

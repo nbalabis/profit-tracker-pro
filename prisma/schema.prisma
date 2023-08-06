@@ -34,24 +34,24 @@ model Store {
 }
 
 model Product {
-  id          String   @id @default(cuid())
+  id          String    @id @default(cuid())
   name        String
   storeId     String
-  store       Store    @relation(fields: [storeId], references: [id], onDelete: Cascade)
+  store       Store     @relation(fields: [storeId], references: [id], onDelete: Cascade)
   category    Category
   source      Source
-  sourceDate  DateTime @db.Date()
+  sourceDate  DateTime  @db.Date()
   sourcePrice Float
-  status      Status   @default(UNLISTED)
+  status      Status    @default(UNLISTED)
   saleChannel Channel?
-  saleDate    DateTime @db.Date()
+  saleDate    DateTime? @db.Date()
   salePrice   Float?
   platformFee Float?
   tax         Float?
   shippingFee Float?
   miscFee     Float?
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
 
   @@index([storeId])
 }

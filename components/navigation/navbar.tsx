@@ -13,7 +13,6 @@ interface NavbarProps {
 
 const Navbar = ({ isSubscribed = false }: NavbarProps) => {
   const pathname = usePathname();
-  console.log(pathname);
 
   const [currentRoute, setCurrentRoute] = useState(routeConfig[0]);
 

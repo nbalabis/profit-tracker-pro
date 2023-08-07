@@ -43,6 +43,7 @@ import {
 } from "@/components/ui/popover";
 import { Calendar } from "@/components/ui/calendar";
 import { useToast } from "@/components/ui/use-toast";
+import { useProModal } from "@/hooks/use-pro-modal";
 
 // Create zod schema for form validation
 const formSchema = z.object({
@@ -60,6 +61,7 @@ const AddProductModal = () => {
   const router = useRouter();
   const modal = useAddProductModal();
   const { storeId } = useParams();
+  const proModal = useProModal();
 
   const [isLoading, setIsLoading] = useState(false);
 
@@ -98,11 +100,7 @@ const AddProductModal = () => {
       });
     } catch (error: any) {
       if (error?.response?.status === 403) {
-        // TODO: Open Upgrade Modal
-        toast({
-          title: "Upgrade Required",
-          description: "You must upgrade your account to create more stores.",
-        });
+        proModal.onOpen();
       } else {
         toast({
           title: "Uh oh! Something went wrong.",
@@ -115,7 +113,13 @@ const AddProductModal = () => {
   }
 
   return (
-    <Dialog open={modal.isOpen} onOpenChange={modal.onClose}>
+    <Dialog
+      open={modal.isOpen}
+      onOpenChange={() => {
+        modal.onClose();
+        form.reset();
+      }}
+    >
       <DialogContent>
         <DialogHeader>
           <DialogTitle>Add a New Product</DialogTitle>
@@ -284,8 +288,12 @@ const AddProductModal = () => {
               </Button>
               <Button
                 variant="outline"
+                type="button"
                 disabled={isLoading}
-                onClick={() => modal.onClose()}
+                onClick={() => {
+                  modal.onClose();
+                  form.reset();
+                }}
               >
                 Cancel
               </Button>

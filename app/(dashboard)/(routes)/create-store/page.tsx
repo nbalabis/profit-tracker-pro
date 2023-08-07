@@ -18,6 +18,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/components/ui/use-toast";
+import { useProModal } from "@/hooks/use-pro-modal";
 
 const formSchema = z.object({
   name: z.string().min(3).max(100),
@@ -26,6 +27,7 @@ const formSchema = z.object({
 const CreateStorePage = () => {
   const { toast } = useToast();
   const router = useRouter();
+  const proModal = useProModal();
 
   const [isLoading, setIsLoading] = useState(false);
 
@@ -49,11 +51,7 @@ const CreateStorePage = () => {
       });
     } catch (error: any) {
       if (error?.response?.status === 403) {
-        // TODO: Open Upgrade Modal
-        toast({
-          title: "Upgrade Required",
-          description: "You must upgrade your account to create more stores.",
-        });
+        proModal.onOpen();
       } else {
         toast({
           title: "Uh oh! Something went wrong.",

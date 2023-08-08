@@ -20,4 +20,12 @@ export const sources = [
   { title: "Other", value: "OTHER", icon: "📦", color: "#a1a1aa" },
 ];
 
+export const channels = [
+  { title: "eBay", value: "EBAY", icon: "🏠", color: "#f43f5e" },
+  { title: "Etsy", value: "ETSY", icon: "👕", color: "#7c3aed" },
+  { title: "Mercari", value: "MERCARI", icon: "📹", color: "#38bdf8" },
+  { title: "Poshmark", value: "POSHMARK", icon: "📦", color: "#a1a1aa" },
+  { title: "Other", value: "OTHER", icon: "📦", color: "#a1a1aa" },
+];
+
 export type Categories = typeof categories;

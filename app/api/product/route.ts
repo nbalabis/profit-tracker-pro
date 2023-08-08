@@ -6,6 +6,7 @@ import {
   checkRemainingTrialProducts,
   checkSubscription,
 } from "@/lib/subscription";
+import { getStoreById } from "@/actions/stores";
 
 export async function POST(req: Request) {
   try {
@@ -17,7 +18,8 @@ export async function POST(req: Request) {
       return new NextResponse("Unauthorized", { status: 401 });
     }
 
-    if (!name || !source || !sourceDate || !sourcePrice || !category) {
+    // Check if required values are present (prices can be 0)
+    if (!name || !source || !sourceDate || !category) {
       return new NextResponse("Missing required values", { status: 400 });
     }
 
@@ -51,6 +53,60 @@ export async function POST(req: Request) {
 
     return new NextResponse(JSON.stringify(response), { status: 200 });
   } catch (error) {
+    console.log("[CREATE_STORE_ERROR]", error);
+    return new NextResponse("Internal Error", { status: 500 });
+  }
+}
+
+/* MARK PRODUCT AS SOLD */
+export async function PATCH(req: Request) {
+  try {
+    const { userId } = auth();
+    const body = await req.json();
+    const {
+      storeId,
+      productId,
+      salePrice,
+      saleDate,
+      saleChannel,
+      platformFee,
+      tax,
+      shippingFee,
+      miscFee,
+    } = body;
+
+    // Check if user is logged in and owns the store containing the product
+    const store = await getStoreById(storeId);
+    if (!userId || !store) {
+      return new NextResponse("Unauthorized", { status: 401 });
+    }
+
+    // Check if required values are present (prices can be 0)
+    if (!productId || !saleDate || !saleChannel) {
+      return new NextResponse("Missing required values", { status: 400 });
+    }
+
+    // User will be able to mark any product as sold - regardless of plan tier
+
+    // Update the product in the database and set status to sold
+    const response = await prismadb.product.update({
+      where: { id: productId },
+      data: {
+        status: "SOLD",
+        salePrice,
+        saleDate,
+        saleChannel,
+        platformFee,
+        tax,
+        shippingFee,
+        miscFee,
+      },
+    });
+
+    // Return the updated product
+    return new NextResponse(JSON.stringify(response), { status: 200 });
+  } catch (error) {
+    // Throw an error if something goes wrong
     console.log("[CREATE_STORE_ERROR]", error);
     return new NextResponse("Internal Error", { status: 500 });
   }

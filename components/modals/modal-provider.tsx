@@ -2,8 +2,9 @@
 
 import { useEffect, useState } from "react";
 
-import AddProductModal from "./add-product-modal";
 import ProModal from "./pro-modal";
+import AddProductModal from "./add-product-modal";
+import SoldPorductModal from "./sold-product-modal";
 
 export const ModalProvider = () => {
   const [isMounted, setIsMounted] = useState(false);
@@ -15,8 +16,9 @@ export const ModalProvider = () => {
   if (!isMounted) return null;
   return (
     <>
-      <AddProductModal />
       <ProModal />
+      <AddProductModal />
+      <SoldPorductModal />
     </>
   );
 };

@@ -1,9 +1,8 @@
 "use client";
 
-import { useState } from "react";
-import type { Product } from "@prisma/client";
-import { useRouter } from "next/navigation";
 import { Row } from "@tanstack/react-table";
+import type { Product } from "@prisma/client";
+import { useParams } from "next/navigation";
 import { DollarSign, MoreHorizontal, Pen, Trash } from "lucide-react";
 
 import {
@@ -13,11 +12,9 @@ import {
   DropdownMenuItem,
   DropdownMenuSeparator,
 } from "@/components/ui/dropdown-menu";
-import { useToast } from "@/components/ui/use-toast";
 import { Button } from "@/components/ui/button";
-
-// import SoldProductDialog from "../SoldProductDialog";
-// import EditProductDialog from "../EditProductDialog";
+import { useToast } from "@/components/ui/use-toast";
+import { useSoldProductModal } from "@/hooks/use-sold-product-modal";
 
 interface ProducTableRowActionsProps {
   row: Row<Product>;
@@ -26,29 +23,11 @@ interface ProducTableRowActionsProps {
 const ProducTableRowActions: React.FC<ProducTableRowActionsProps> = ({
   row,
 }) => {
-  const [showSoldDialog, setShowSoldDialog] = useState(false);
-  const [showEditDialog, setShowEditDialog] = useState(false);
+  const soldProductModal = useSoldProductModal();
+  const params = useParams();
 
-  //   const { supabaseClient } = useSessionContext();
-  const { toast } = useToast();
-  const router = useRouter();
-
-  // Delete product from supabase
-  const handleProductDelete = async () => {
-    // Delete item from supabase
-    // const { error } = await supabaseClient
-    //   .from("inventory_items")
-    //   .delete()
-    //   .match({
-    //     id: row.original.id,
-    //   });
-    // if (error) {
-    //   toast({ title: "Error", description: error.message });
-    // } else {
-    //   toast({ title: "Success", description: "Item Deleted" });
-    // }
-    // router.refresh();
-  };
+  /* DELETE HANDLER */
+  const handleProductDelete = async () => {};
 
   return (
     <>
@@ -62,14 +41,21 @@ const ProducTableRowActions: React.FC<ProducTableRowActionsProps> = ({
         <DropdownMenuContent align="end">
           {!row.original.saleDate && (
             <>
-              <DropdownMenuItem onClick={() => setShowSoldDialog(true)}>
+              <DropdownMenuItem
+                onClick={() =>
+                  soldProductModal.onOpen(
+                    params.storeId as string,
+                    row.original.id,
+                  )
+                }
+              >
                 <DollarSign className="mr-2 h-3.5 w-3.5 text-muted-foreground/70" />
                 Mark as sold
               </DropdownMenuItem>
               <DropdownMenuSeparator />
             </>
           )}
-          <DropdownMenuItem onClick={() => setShowEditDialog(true)}>
+          <DropdownMenuItem onClick={() => {}}>
             <Pen className="mr-2 h-3.5 w-3.5 text-muted-foreground/70" />
             Edit
           </DropdownMenuItem>
@@ -79,17 +65,6 @@ const ProducTableRowActions: React.FC<ProducTableRowActionsProps> = ({
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
-      {/* <SoldProductDialog
-        open={showSoldDialog}
-        setOpen={setShowSoldDialog}
-        productId={row.original.id}
-      />
-      <EditProductDialog
-        open={showEditDialog}
-        setOpen={setShowEditDialog}
-        product={row.original}
-        sold={row.original.sold}
-      /> */}
     </>
   );
 };

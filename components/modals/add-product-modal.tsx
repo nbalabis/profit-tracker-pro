@@ -140,6 +140,7 @@ const AddProductModal = () => {
                           <Input
                             {...field}
                             placeholder="What did you purchase?"
+                            disabled={isLoading}
                           />
                         </FormControl>
                         <FormMessage />
@@ -158,7 +159,10 @@ const AddProductModal = () => {
                         render={({ field }) => (
                           <FormItem className="w-1/2">
                             <FormLabel>Source</FormLabel>
-                            <Select onValueChange={field.onChange}>
+                            <Select
+                              onValueChange={field.onChange}
+                              disabled={isLoading}
+                            >
                               <FormControl>
                                 <SelectTrigger>
                                   <SelectValue placeholder="Select a source" />
@@ -191,6 +195,7 @@ const AddProductModal = () => {
                                 <FormControl>
                                   <Button
                                     variant={"outline"}
+                                    disabled={isLoading}
                                     className={cn(
                                       "w-[240px] pl-3 text-left font-normal",
                                       !field.value && "text-muted-foreground",
@@ -240,6 +245,7 @@ const AddProductModal = () => {
                                 type="number"
                                 step="0.01"
                                 placeholder="What did you pay?"
+                                disabled={isLoading}
                               />
                             </FormControl>
                             <FormMessage />
@@ -253,7 +259,10 @@ const AddProductModal = () => {
                         render={({ field }) => (
                           <FormItem className="w-1/2">
                             <FormLabel>Category</FormLabel>
-                            <Select onValueChange={field.onChange}>
+                            <Select
+                              onValueChange={field.onChange}
+                              disabled={isLoading}
+                            >
                               <FormControl>
                                 <SelectTrigger>
                                   <SelectValue placeholder="Select a category" />

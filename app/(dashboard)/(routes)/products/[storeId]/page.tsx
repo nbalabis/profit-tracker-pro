@@ -1,18 +1,27 @@
-"use client";
+import { DataTable } from "@/components/tables/data-table";
+import { allProductsColumns } from "@/components/tables/product-columns";
+import { getAllProducts } from "@/actions/products";
+import { getStoreById } from "@/actions/stores";
 
-import { Plus } from "lucide-react";
+interface ProductPageProps {
+  params: { storeId: string };
+}
 
-import { Button } from "@/components/ui/button";
-import { useAddProductModal } from "@/hooks/use-add-product-modal";
+const ProductsPage: React.FC<ProductPageProps> = async ({ params }) => {
+  const store = await getStoreById(params.storeId);
+  const products = await getAllProducts(params.storeId);
 
-const ProductsPage = () => {
-  const addProductModal = useAddProductModal();
+  if (!store) return <div>Store not found</div>;
 
   return (
     <div>
-      <Button size="icon" onClick={() => addProductModal.onOpen()}>
-        <Plus className="h-4 w-4" />
-      </Button>
+      <DataTable
+        columns={allProductsColumns}
+        data={products}
+        addBtnForStore={store}
+        withSearch
+        pagination="full"
+      />
     </div>
   );
 };

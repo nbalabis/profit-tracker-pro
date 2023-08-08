@@ -9,7 +9,7 @@ import SortedColumnHeader from "./sorted-column-header";
 import { sources } from "@/config/selectOptions";
 
 const title: ColumnDef<Product> = {
-  accessorKey: "title",
+  accessorKey: "name",
   header: "Item Name",
   cell: ({ row }) => (
     <p className="max-w-[200px] truncate">{row.original.name}</p>

@@ -80,14 +80,18 @@ export function DataTable<TData, TValue>({
         <div className="flex items-center pb-3 md:pb-6">
           <Input
             placeholder="Search for an item..."
-            value={(table.getColumn("title")?.getFilterValue() as string) ?? ""}
-            onChange={(event) =>
-              table.getColumn("title")?.setFilterValue(event.target.value)
-            }
+            value={(table.getColumn("name")?.getFilterValue() as string) ?? ""}
+            onChange={(event) => {
+              table.getColumn("name")?.setFilterValue(event.target.value);
+            }}
             className="max-w-sm"
           />
           {addBtnForStore && (
-            <Button size="icon" onClick={() => addProductModal.onOpen()} className="ml-auto">
+            <Button
+              size="icon"
+              onClick={() => addProductModal.onOpen()}
+              className="ml-auto"
+            >
               <Plus className="h-4 w-4" />
             </Button>
           )}

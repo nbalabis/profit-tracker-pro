@@ -36,7 +36,7 @@ const SubscriptionButton = ({
       className={cn(
         isSubscribed
           ? "bg-secondary text-secondary-foreground hover:bg-secondary/80"
-          : "bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 text-white",
+          : "bg-gradient-to-r from-[#3361EB] to-[#59C3C8] text-secondary",
       )}
     >
       {isSubscribed ? "Manage Subscription" : "Subscribe"}

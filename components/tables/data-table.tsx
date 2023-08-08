@@ -77,7 +77,7 @@ export function DataTable<TData, TValue>({
   return (
     <div>
       {withSearch && (
-        <div className="flex items-center py-4">
+        <div className="flex items-center pb-3 md:pb-6">
           <Input
             placeholder="Search for an item..."
             value={(table.getColumn("title")?.getFilterValue() as string) ?? ""}
@@ -87,7 +87,7 @@ export function DataTable<TData, TValue>({
             className="max-w-sm"
           />
           {addBtnForStore && (
-            <Button size="icon" onClick={() => addProductModal.onOpen()}>
+            <Button size="icon" onClick={() => addProductModal.onOpen()} className="ml-auto">
               <Plus className="h-4 w-4" />
             </Button>
           )}

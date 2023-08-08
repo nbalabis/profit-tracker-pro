@@ -33,7 +33,11 @@ const sourcePrice: ColumnDef<Product> = {
 
 const source: ColumnDef<Product> = {
   accessorKey: "source",
-  header: () => <div className="text-center">Sourced From</div>,
+  header: ({ column }) => (
+    <div className="text-center">
+      <SortedColumnHeader column={column} title="Sourced From" />
+    </div>
+  ),
   cell: ({ row }) => {
     const source = sources.find((s) => s.value === row.getValue("source"));
     return <div className="text-center">{source?.title}</div>;
@@ -55,7 +59,11 @@ const sourceDate: ColumnDef<Product> = {
 
 const status: ColumnDef<Product> = {
   id: "status",
-  header: () => <div className="text-center">Status</div>,
+  header: ({ column }) => (
+    <div className="text-center">
+      <SortedColumnHeader column={column} title="Status" />
+    </div>
+  ),
   cell: ({ row }) => {
     return <div className="text-center text-gray-400">Unlisted</div>;
   },
@@ -95,7 +103,11 @@ const saleDate: ColumnDef<Product> = {
 
 const saleChannel: ColumnDef<Product> = {
   accessorKey: "sale_channel",
-  header: () => <div className="text-center">Sold On</div>,
+  header: ({column}) => (
+    <div className="text-center">
+      <SortedColumnHeader column={column} title="Sold On" />
+    </div>
+  ),
   cell: ({ row }) => {
     if (!row.getValue("sale_channel"))
       return <div className="text-center text-gray-400">-</div>;

@@ -14,7 +14,7 @@ const ProductsPage: React.FC<ProductPageProps> = async ({ params }) => {
   if (!store) return <div>Store not found</div>;
 
   return (
-    <div>
+    <div className="p-3 md:p-6">
       <DataTable
         columns={allProductsColumns}
         data={products}

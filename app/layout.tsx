@@ -23,7 +23,7 @@ export default function RootLayout({
     <ClerkProvider>
       <html lang="en">
         <body className={inter.className}>
-          <main>{children}</main>
+          <main className="overflow-x-hidden">{children}</main>
           <Toaster />
           <ModalProvider />
         </body>

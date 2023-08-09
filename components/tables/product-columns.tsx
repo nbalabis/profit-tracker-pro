@@ -70,16 +70,16 @@ const status: ColumnDef<Product> = {
 };
 
 const salePrice: ColumnDef<Product> = {
-  accessorKey: "sale_price",
+  accessorKey: "salePrice",
   header: ({ column }) => (
     <div className="text-right">
       <SortedColumnHeader column={column} title="Sale Price" />
     </div>
   ),
   cell: ({ row }) => {
-    if (!row.getValue("sale_price"))
+    if (!row.getValue("salePrice"))
       return <div className="text-right text-gray-400">Unsold</div>;
-    const salePrice = parseFloat(row.getValue("sale_price"));
+    const salePrice = parseFloat(row.getValue("salePrice"));
     const formatted = formatPrice(salePrice);
 
     return <div className="text-right font-medium">{formatted}</div>;
@@ -103,7 +103,7 @@ const saleDate: ColumnDef<Product> = {
 
 const saleChannel: ColumnDef<Product> = {
   accessorKey: "sale_channel",
-  header: ({column}) => (
+  header: ({ column }) => (
     <div className="text-center">
       <SortedColumnHeader column={column} title="Sold On" />
     </div>
@@ -123,7 +123,7 @@ const fees: ColumnDef<Product> = {
     </div>
   ),
   cell: ({ row }) => {
-    if (!row.getValue("sale_price"))
+    if (!row.getValue("salePrice"))
       return <div className="mr-4 text-right text-gray-400">-</div>;
 
     const platformFees = row.original.platformFee || 0;

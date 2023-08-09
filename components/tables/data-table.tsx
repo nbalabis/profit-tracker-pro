@@ -77,7 +77,7 @@ export function DataTable<TData, TValue>({
   return (
     <div>
       {withSearch && (
-        <div className="flex items-center pb-3 md:pb-6">
+        <div className="flex items-center justify-between space-x-3 pb-3 md:pb-6 ">
           <Input
             placeholder="Search for an item..."
             value={(table.getColumn("name")?.getFilterValue() as string) ?? ""}
@@ -90,7 +90,7 @@ export function DataTable<TData, TValue>({
             <Button
               size="icon"
               onClick={() => addProductModal.onOpen()}
-              className="ml-auto"
+              className="aspect-square"
             >
               <Plus className="h-4 w-4" />
             </Button>

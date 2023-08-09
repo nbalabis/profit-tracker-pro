@@ -25,7 +25,7 @@ export function DataTablePagination<TData>({
   pagination,
 }: DataTablePaginationProps<TData>) {
   return (
-    <div className="mt-4 flex items-center justify-between px-2">
+    <div className="flex items-center justify-between pt-3 md:pt-6">
       {pagination === "full" && (
         <div className="flex-1 text-sm text-muted-foreground">
           {table.getFilteredSelectedRowModel().rows.length} of{" "}

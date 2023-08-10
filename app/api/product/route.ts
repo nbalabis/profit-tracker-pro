@@ -126,6 +126,13 @@ export async function PUT(req: Request) {
       sourceDate,
       sourcePrice,
       category,
+      salePrice,
+      saleDate,
+      saleChannel,
+      platformFee,
+      tax,
+      shippingFee,
+      miscFee,
     } = body;
 
     // Check if user is logged in and owns the store containing the product
@@ -157,6 +164,13 @@ export async function PUT(req: Request) {
         sourceDate,
         sourcePrice,
         category,
+        salePrice,
+        saleDate,
+        saleChannel,
+        platformFee,
+        tax,
+        shippingFee,
+        miscFee,
       },
     });
 

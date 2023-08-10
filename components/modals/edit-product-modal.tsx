@@ -8,6 +8,7 @@ import {
 } from "@/components/ui/dialog";
 import { useEditProductModal } from "@/hooks/use-edit-product-modal";
 import EditUnsoldProductForm from "@/components/forms/edit-unsold-product-form";
+import EditSoldProductForm from "../forms/edit-sold-product-form";
 
 const SoldProductModal = () => {
   const modal = useEditProductModal();
@@ -19,7 +20,7 @@ const SoldProductModal = () => {
           <DialogTitle>Edit Product</DialogTitle>
         </DialogHeader>
         {modal.isSold ? (
-          <div>Sold Product</div>
+          <EditSoldProductForm product={modal.product} />
         ) : (
           <EditUnsoldProductForm product={modal.product} />
         )}

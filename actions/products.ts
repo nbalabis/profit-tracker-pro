@@ -23,3 +23,29 @@ export async function getAllProducts(storeId: string): Promise<Product[]> {
   }
   return [];
 }
+
+/* GET A PRODUCT BY ID */
+export async function getProductById(
+  productId: string,
+): Promise<Product | null> {
+  try {
+    // Check if the user is logged in
+    const { userId } = auth();
+    if (!userId) return null;
+
+    // Get the product by ID
+    const product = await prismadb.product.findUnique({
+      where: { id: productId },
+    });
+    if (!product) return null;
+
+    // Check if the user owns the store containing the product
+    const store = await getStoreById(product.storeId);
+    if (!store) return null;
+
+    return product;
+  } catch (error) {
+    console.log("[GET_PRODUCT_ERROR]", error);
+  }
+  return null;
+}

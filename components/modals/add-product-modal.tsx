@@ -1,25 +1,14 @@
 "use client";
 
-import { useState } from "react";
-import { useForm } from "react-hook-form";
 import * as z from "zod";
+import axios from "axios";
+import { useState } from "react";
+import { format } from "date-fns";
+import { useForm } from "react-hook-form";
+import { CalendarIcon } from "lucide-react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useParams, useRouter } from "next/navigation";
-import { format } from "date-fns";
-import { CalendarIcon } from "lucide-react";
-import axios from "axios";
 
-import { cn } from "@/lib/utils";
-import { useAddProductModal } from "@/hooks/use-add-product-modal";
-import { categories, sources } from "@/config/selectOptions";
-import { Button } from "@/components/ui/button";
-import {
-  Dialog,
-  DialogContent,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
 import {
   Form,
   FormControl,
@@ -28,7 +17,13 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
+import {
+  Dialog,
+  DialogContent,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 import {
   Select,
   SelectContent,
@@ -41,9 +36,14 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import { cn } from "@/lib/utils";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
-import { useToast } from "@/components/ui/use-toast";
 import { useProModal } from "@/hooks/use-pro-modal";
+import { useToast } from "@/components/ui/use-toast";
+import { categories, sources } from "@/config/selectOptions";
+import { useAddProductModal } from "@/hooks/use-add-product-modal";
 
 // Create zod schema for form validation
 const formSchema = z.object({
@@ -81,12 +81,11 @@ const AddProductModal = () => {
   async function onSubmit(values: z.infer<typeof formSchema>) {
     try {
       setIsLoading(true);
-
       const response = await axios.post("/api/product", {
         name: values.name,
         storeId,
         source: values.source,
-        sourceDate: values.sourceDate,
+        sourceDate: values.sourceDate.toLocaleDateString(),
         sourcePrice: values.sourcePrice,
         category: values.category,
       });

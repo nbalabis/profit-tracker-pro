@@ -2,7 +2,6 @@
 
 import { Row } from "@tanstack/react-table";
 import type { Product } from "@prisma/client";
-import { useParams } from "next/navigation";
 import { DollarSign, MoreHorizontal, Pen, Trash } from "lucide-react";
 
 import {
@@ -13,8 +12,8 @@ import {
   DropdownMenuSeparator,
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
-import { useToast } from "@/components/ui/use-toast";
 import { useSoldProductModal } from "@/hooks/use-sold-product-modal";
+import { useEditProductModal } from "@/hooks/use-edit-product-modal";
 
 interface ProducTableRowActionsProps {
   row: Row<Product>;
@@ -24,10 +23,7 @@ const ProducTableRowActions: React.FC<ProducTableRowActionsProps> = ({
   row,
 }) => {
   const soldProductModal = useSoldProductModal();
-  const params = useParams();
-
-  /* DELETE HANDLER */
-  const handleProductDelete = async () => {};
+  const editProductModal = useEditProductModal();
 
   return (
     <>
@@ -43,10 +39,7 @@ const ProducTableRowActions: React.FC<ProducTableRowActionsProps> = ({
             <>
               <DropdownMenuItem
                 onClick={() =>
-                  soldProductModal.onOpen(
-                    params.storeId as string,
-                    row.original.id,
-                  )
+                  soldProductModal.onOpen(row.original.storeId, row.original.id)
                 }
               >
                 <DollarSign className="mr-2 h-3.5 w-3.5 text-muted-foreground/70" />
@@ -55,11 +48,15 @@ const ProducTableRowActions: React.FC<ProducTableRowActionsProps> = ({
               <DropdownMenuSeparator />
             </>
           )}
-          <DropdownMenuItem onClick={() => {}}>
+          <DropdownMenuItem
+            onClick={() =>
+              editProductModal.onOpen(row.original, !!row.original.saleDate)
+            }
+          >
             <Pen className="mr-2 h-3.5 w-3.5 text-muted-foreground/70" />
             Edit
           </DropdownMenuItem>
-          <DropdownMenuItem onClick={handleProductDelete}>
+          <DropdownMenuItem onClick={() => {}}>
             <Trash className="mr-2 h-3.5 w-3.5 text-muted-foreground/70" />
             Delete
           </DropdownMenuItem>

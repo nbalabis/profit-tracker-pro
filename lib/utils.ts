@@ -31,3 +31,9 @@ export function formatDate(date: Date): string {
 
   return dateAsFormattedString;
 }
+
+/* CONVERT LOCAL DATE TO UTC ISO STRING */
+export function convertLocalDateToUTC(date: Date) {
+  const utc = new Date(date.getTime() + date.getTimezoneOffset() * 60000);
+  return utc;
+}

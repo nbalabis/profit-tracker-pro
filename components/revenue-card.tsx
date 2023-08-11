@@ -25,7 +25,7 @@ const RevenueCard: React.FC<RevenueCardProps> = ({ products, timeFrame }) => {
     : "No sales";
 
   return (
-    <Card className="w-full md:w-1/4">
+    <Card className="">
       <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
         <CardTitle className="text-md font-medium">
           Total Revenue This Month

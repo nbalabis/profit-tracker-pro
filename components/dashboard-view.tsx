@@ -3,10 +3,9 @@
 import { useState } from "react";
 import { Product } from "@prisma/client";
 
-import { cn } from "@/lib/utils";
 import { Card } from "@/components/ui/card";
-import { TabsList, TabsTrigger } from "./ui/tabs";
 import { SelectOption, Selector } from "@/components/ui/selector";
+import RevenueCard from "./revenue-card";
 
 interface DashboardViewProps {
   products: Product[];
@@ -40,10 +39,10 @@ const DashboardView: React.FC<DashboardViewProps> = ({ products }) => {
       </Selector>
       <div className="flex flex-col gap-3 md:gap-6">
         <div className="flex flex-col gap-3 md:flex-row md:gap-6">
-          <Card className="h-32 grow">StatCard 1</Card>
-          <Card className="h-32 grow">StatCard 2</Card>
-          <Card className="h-32 grow">StatCard 3</Card>
-          <Card className="h-32 grow">StatCard 4</Card>
+          <RevenueCard products={products} timeFrame={timeFrame} />
+          <Card className="h-32 w-full md:w-1/4">StatCard 2</Card>
+          <Card className="h-32 w-full md:w-1/4">StatCard 3</Card>
+          <Card className="h-32 w-full md:w-1/4">StatCard 4</Card>
         </div>
         <div className="flex flex-col gap-3 md:flex-row md:gap-6">
           <Card className="h-96 grow">Sales Graph</Card>

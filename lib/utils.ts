@@ -32,6 +32,21 @@ export function formatDate(date: Date): string {
   return dateAsFormattedString;
 }
 
+/* FORMAT A PERCENTAGE */
+export const formatPercentage = (percentage: number): string => {
+  let formattedPercentage: string;
+
+  if (percentage === Infinity) {
+    formattedPercentage = "No sales last month";
+  } else {
+    const sign = percentage >= 0 ? "+" : "-";
+    const absPercentageIncrease = Math.abs(percentage);
+    formattedPercentage = `${sign}${absPercentageIncrease.toFixed(1)}% from`;
+  }
+
+  return formattedPercentage;
+};
+
 /* CONVERT LOCAL DATE TO UTC ISO STRING */
 export function convertLocalDateToUTC(date: Date | null) {
   if (!date) return undefined;

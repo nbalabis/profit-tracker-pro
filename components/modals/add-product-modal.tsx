@@ -72,7 +72,7 @@ const AddProductModal = () => {
       name: "",
       source: "",
       sourceDate: new Date(),
-      sourcePrice: undefined,
+      sourcePrice: 0,
       category: "",
     },
   });

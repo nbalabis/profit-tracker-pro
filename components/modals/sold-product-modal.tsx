@@ -94,7 +94,7 @@ const SoldProductModal = () => {
         storeId: modal.storeId,
         productId: modal.productId,
         salePrice: values.sale_price,
-        saleDate: values.sale_date,
+        saleDate: values.sale_date.toLocaleDateString(),
         saleChannel: values.sale_channel,
         platformFee: values.platform_fees,
         tax: values.tax,

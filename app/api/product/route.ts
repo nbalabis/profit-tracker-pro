@@ -95,7 +95,7 @@ export async function PATCH(req: Request) {
       data: {
         status: "SOLD",
         salePrice,
-        saleDate,
+        saleDate: new Date(saleDate),
         saleChannel,
         platformFee,
         tax,

@@ -1,37 +1,22 @@
 import { getStoreById } from "@/actions/stores";
-import { Card } from "@/components/ui/card";
+import { getAllProducts } from "@/actions/products";
+import DashboardView from "@/components/dashboard-view";
 
 interface DashboardPageProps {
   params: { storeId: string };
 }
 
 const DashboardPage: React.FC<DashboardPageProps> = async ({ params }) => {
+  /* GET CURRENT STORE */
   const store = await getStoreById(params.storeId);
-
   if (!store) return <div>Store not found</div>;
+
+  /* GET ALL PRODUCTS FOR STORE */
+  const products = await getAllProducts(params.storeId);
 
   return (
     <div className="space-y-3 p-3 md:space-y-6 md:p-6">
-      <div className="flex gap-5">
-        <p>Last Week</p>
-        <p className="underline">Last Month</p>
-        <p>Last Year</p>
-      </div>
-      <div className="flex flex-col gap-3 md:gap-6">
-        <div className="flex flex-col gap-3 md:flex-row md:gap-6">
-          <Card className="h-32 grow">StatCard 1</Card>
-          <Card className="h-32 grow">StatCard 2</Card>
-          <Card className="h-32 grow">StatCard 3</Card>
-          <Card className="h-32 grow">StatCard 4</Card>
-        </div>
-        <div className="flex flex-col gap-3 md:flex-row md:gap-6">
-          <Card className="h-96 grow">Sales Graph</Card>
-          <Card className="h-96 md:w-96">Category Chart</Card>
-        </div>
-        <div>
-          <Card className="h-96">Transactions Table</Card>
-        </div>
-      </div>
+      <DashboardView products={products} />
     </div>
   );
 };

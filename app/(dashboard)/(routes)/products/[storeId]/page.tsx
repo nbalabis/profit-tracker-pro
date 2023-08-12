@@ -1,5 +1,5 @@
 import { DataTable } from "@/components/tables/data-table";
-import { allProductsColumns } from "@/components/tables/product-columns";
+import { overviewProductsColumns } from "@/components/tables/product-columns";
 import { getAllProducts } from "@/actions/products";
 import { getStoreById } from "@/actions/stores";
 
@@ -16,7 +16,7 @@ const ProductsPage: React.FC<ProductPageProps> = async ({ params }) => {
   return (
     <div className="p-3 md:p-6">
       <DataTable
-        columns={allProductsColumns}
+        columns={overviewProductsColumns}
         data={products}
         addBtnForStore={store}
         withSearch

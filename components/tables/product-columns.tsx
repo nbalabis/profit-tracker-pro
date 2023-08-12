@@ -222,8 +222,9 @@ export const allProductsColumns: ColumnDef<Product>[] = [
 export const overviewProductsColumns: ColumnDef<Product>[] = [
   title,
   sourcePrice,
+  sourceDate,
   salePrice,
+  saleDate,
   profit,
-  daysHeld,
   actions,
 ];

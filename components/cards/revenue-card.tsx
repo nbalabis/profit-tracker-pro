@@ -1,11 +1,11 @@
 import { Product } from "@prisma/client";
 import { DollarSign } from "lucide-react";
 
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
   calculatePercentRevenueChange,
   calculateTotalRevenue,
 } from "@/lib/calculations";
+import OverviewCard from "@/components/ui/overview-card";
 import { formatPercentage, formatPrice } from "@/lib/utils";
 
 interface RevenueCardProps {
@@ -25,22 +25,12 @@ const RevenueCard: React.FC<RevenueCardProps> = ({ products, timeFrame }) => {
     : "No sales";
 
   return (
-    <Card className="">
-      <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-        <CardTitle className="text-md font-medium">
-          Total Revenue This Month
-        </CardTitle>
-        <DollarSign className="h-5 w-5 text-muted-foreground" />
-      </CardHeader>
-      <CardContent>
-        <>
-          <div className="text-3xl font-bold">{formattedRevenue}</div>
-          <p className="pt-1 text-sm text-muted-foreground">
-            {formattedPercentage} last {timeFrame}
-          </p>
-        </>
-      </CardContent>
-    </Card>
+    <OverviewCard
+      title="Total Revenue This Month"
+      Icon={DollarSign}
+      value={formattedRevenue}
+      change={`${formattedPercentage} last ${timeFrame}`}
+    />
   );
 };
 

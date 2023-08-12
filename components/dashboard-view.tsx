@@ -4,8 +4,8 @@ import { useState } from "react";
 import { Product } from "@prisma/client";
 
 import { Card } from "@/components/ui/card";
+import RevenueCard from "@/components/cards/revenue-card";
 import { SelectOption, Selector } from "@/components/ui/selector";
-import RevenueCard from "./revenue-card";
 
 interface DashboardViewProps {
   products: Product[];

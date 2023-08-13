@@ -6,7 +6,7 @@ import {
   calculateTotalRevenue,
 } from "@/lib/calculations";
 import OverviewCard from "@/components/ui/overview-card";
-import { formatPercentage, formatPrice } from "@/lib/utils";
+import { capitalize, formatPercentage, formatPrice } from "@/lib/utils";
 
 interface RevenueCardProps {
   products: Product[];
@@ -26,7 +26,7 @@ const RevenueCard: React.FC<RevenueCardProps> = ({ products, timeFrame }) => {
 
   return (
     <OverviewCard
-      title="Total Revenue This Month"
+      title={`Revenue This ${capitalize(timeFrame)}`}
       Icon={DollarSign}
       value={formattedRevenue}
       change={`${formattedPercentage} last ${timeFrame}`}

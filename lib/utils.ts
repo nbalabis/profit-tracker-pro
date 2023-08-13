@@ -9,6 +9,11 @@ export function absoluteUrl(path: String) {
   return `${process.env.NEXT_PUBLIC_APP_URL}${path}`;
 }
 
+// This capitalizes the first letter of a string
+export const capitalize = (str: string) => {
+  return str.charAt(0).toUpperCase() + str.slice(1);
+};
+
 // This formats a price to USD
 export const formatPrice = (price: number) => {
   return new Intl.NumberFormat("en-US", {

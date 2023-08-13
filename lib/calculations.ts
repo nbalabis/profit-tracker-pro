@@ -1,42 +1,26 @@
 import { Product } from "@prisma/client";
 
+import { filterProductsByTimeFrame } from "./utils";
+
 /* CALCULATE TOTAL REVENUE FOR GIVEN TIME PERIOD */
 export function calculateTotalRevenue(
   products: Product[],
-  timeframe: string,
+  timeFrame: string,
   endDate?: Date,
 ): number {
-  const now = endDate || new Date(); // Use provided endDate or current date
-  const filteredProducts = products.filter((product) => {
-    if (product.status === "SOLD" && product.saleDate) {
-      const diffInMilliseconds = now.getTime() - product.saleDate.getTime();
+  let totalRevenue = 0;
 
-      switch (timeframe) {
-        case "week":
-          return (
-            diffInMilliseconds <= 7 * 24 * 60 * 60 * 1000 &&
-            diffInMilliseconds >= 0
-          ); // 1 week in milliseconds
-        case "month":
-          return (
-            diffInMilliseconds <= 30 * 24 * 60 * 60 * 1000 &&
-            diffInMilliseconds >= 0
-          ); // 30 days in milliseconds
-        case "year":
-          return (
-            diffInMilliseconds <= 365 * 24 * 60 * 60 * 1000 &&
-            diffInMilliseconds >= 0
-          ); // 365 days in milliseconds
-        default:
-          return false;
-      }
-    }
-    return false;
-  });
+  // Get lists of filtered products
+  const filteredProductsBySaleDate = filterProductsByTimeFrame(
+    products,
+    timeFrame,
+    "saleDate",
+    endDate,
+  );
 
-  const totalRevenue = filteredProducts.reduce((total, product) => {
-    return total + (product.salePrice || 0);
-  }, 0);
+  filteredProductsBySaleDate.forEach(
+    (product) => (totalRevenue += product.salePrice || 0),
+  );
 
   return totalRevenue;
 }
@@ -86,44 +70,33 @@ export const calculateProfit = (
 ): number => {
   let profit = 0;
 
-  // Set start and end dates for time period
-  const end = endDate || new Date();
-  end.setHours(0, 0, 0, 0);
-  let start = new Date(end);
-  switch (timeFrame) {
-    case "week":
-      start.setDate(end.getDate() - 7);
-      break;
-    case "month":
-      start.setMonth(end.getMonth() - 1);
-      break;
-    case "year":
-      start.setFullYear(end.getFullYear() - 1);
-      break;
-    default:
-      throw new Error("Invalid timeframe");
-  }
+  // Get lists of filtered products
+  const filteredProductsBySourceDate = filterProductsByTimeFrame(
+    products,
+    timeFrame,
+    "sourceDate",
+    endDate,
+  );
+  const filteredProductsBySaleDate = filterProductsByTimeFrame(
+    products,
+    timeFrame,
+    "saleDate",
+    endDate,
+  );
 
-  // Go through each product
-  products.forEach((product) => {
-    // If the product was purchased within the time period, subtract it from the total profit
-    if (product.sourceDate <= end && product.sourceDate > start) {
-      profit -= product.sourcePrice;
-    }
+  // For products purchased within the time period, subtract it from the total profit
+  filteredProductsBySourceDate.forEach(
+    (product) => (profit -= product.sourcePrice),
+  );
 
-    // If the product was sold within the time period, add it to the total profit (minus fees)
-    if (
-      product.saleDate &&
-      product.saleDate <= end &&
-      product.saleDate > start
-    ) {
-      const totalFees =
-        (product.shippingFee || 0) +
-        (product.tax || 0) +
-        (product.miscFee || 0) +
-        (product.platformFee || 0);
-      profit += product.salePrice || 0 - totalFees;
-    }
+  // For products sold within the time period, add it to the total profit (minus fees)
+  filteredProductsBySaleDate.forEach((product) => {
+    const totalFees =
+      (product.shippingFee || 0) +
+      (product.tax || 0) +
+      (product.miscFee || 0) +
+      (product.platformFee || 0);
+    profit += product.salePrice || 0 - totalFees;
   });
 
   return profit;

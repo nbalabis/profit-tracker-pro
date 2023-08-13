@@ -1,5 +1,6 @@
-import { type ClassValue, clsx } from "clsx";
+import { Product } from "@prisma/client";
 import { twMerge } from "tailwind-merge";
+import { type ClassValue, clsx } from "clsx";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -58,3 +59,53 @@ export function convertLocalDateToUTC(date: Date | null) {
   const utc = new Date(date.getTime() + date.getTimezoneOffset() * 60000);
   return utc;
 }
+
+/* FILTER PRODUCTS BY TIMEFRAME */
+export const filterProductsByTimeFrame = (
+  products: Product[],
+  timeFrame: string,
+  filterOn: string,
+  endDate?: Date,
+): Product[] => {
+  // Set start and end dates for time period
+  const end = endDate || new Date();
+  end.setHours(0, 0, 0, 0);
+  let start = new Date(end);
+  switch (timeFrame) {
+    case "week":
+      start.setDate(end.getDate() - 7);
+      break;
+    case "month":
+      start.setMonth(end.getMonth() - 1);
+      break;
+    case "year":
+      start.setFullYear(end.getFullYear() - 1);
+      break;
+    default:
+      throw new Error("Invalid timeframe");
+  }
+
+  // Go through each product
+  const filteredProducts = products.filter((product) => {
+    // If the product was purchased within the time period, add it to the list
+    if (
+      filterOn === "sourceDate" &&
+      product.sourceDate <= end &&
+      product.sourceDate > start
+    ) {
+      return product;
+    }
+
+    // If the product was sold within the time period, add it to the list
+    if (
+      filterOn === "saleDate" &&
+      product.saleDate &&
+      product.saleDate <= end &&
+      product.saleDate > start
+    ) {
+      return product;
+    }
+  });
+
+  return filteredProducts;
+};

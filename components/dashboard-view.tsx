@@ -5,6 +5,7 @@ import { Product } from "@prisma/client";
 
 import { Card } from "@/components/ui/card";
 import ROICard from "@/components/cards/roi-card";
+import SalesCard from "@/components/cards/sales-card";
 import ProfitCard from "@/components/cards/profit-card";
 import RevenueCard from "@/components/cards/revenue-card";
 import { SelectOption, Selector } from "@/components/ui/selector";
@@ -44,7 +45,7 @@ const DashboardView: React.FC<DashboardViewProps> = ({ products }) => {
           <RevenueCard products={products} timeFrame={timeFrame} />
           <ProfitCard products={products} timeFrame={timeFrame} />
           <ROICard products={products} timeFrame={timeFrame} />
-          <Card className="">StatCard 4</Card>
+          <SalesCard products={products} timeFrame={timeFrame} />
         </div>
         <div className="flex flex-col gap-3 md:flex-row md:gap-6">
           <Card className="h-96 grow">Sales Graph</Card>

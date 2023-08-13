@@ -4,7 +4,7 @@ import { Card, CardHeader, CardTitle, CardContent } from "./card";
 interface OverviewCardProps {
   title: string;
   Icon: LucideIcon;
-  value: string;
+  value: string | number;
   change: string;
 }
 

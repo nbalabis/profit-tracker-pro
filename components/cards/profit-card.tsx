@@ -1,5 +1,5 @@
 import { Product } from "@prisma/client";
-import { DollarSign } from "lucide-react";
+import { TrendingUp } from "lucide-react";
 
 import OverviewCard from "@/components/ui/overview-card";
 import { capitalize, formatPercentage, formatPrice } from "@/lib/utils";
@@ -21,13 +21,13 @@ const ProfitCard: React.FC<ProfitCardProps> = ({ products, timeFrame }) => {
   // Calculate the change in profit from the previous period
   const percentChange = calculatePercentProfitChange(products, timeFrame);
   const formattedPercentage = !!percentChange
-    ? formatPercentage(percentChange)
+    ? formatPercentage(percentChange, true)
     : "No transactions";
 
   return (
     <OverviewCard
       title={`Profit This ${capitalize(timeFrame)}`}
-      Icon={DollarSign}
+      Icon={TrendingUp}
       value={formattedRevenue}
       change={`${formattedPercentage} last ${timeFrame}`}
     />

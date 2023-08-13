@@ -39,7 +39,10 @@ export function formatDate(date: Date): string {
 }
 
 /* FORMAT A PERCENTAGE */
-export const formatPercentage = (percentage: number): string => {
+export const formatPercentage = (
+  percentage: number,
+  changeFormat: boolean,
+): string => {
   let formattedPercentage: string;
 
   if (percentage === Infinity) {
@@ -47,7 +50,9 @@ export const formatPercentage = (percentage: number): string => {
   } else {
     const sign = percentage >= 0 ? "+" : "-";
     const absPercentageIncrease = Math.abs(percentage);
-    formattedPercentage = `${sign}${absPercentageIncrease.toFixed(1)}% from`;
+    formattedPercentage = `${
+      changeFormat ? sign : ""
+    }${absPercentageIncrease.toFixed(1)}%${changeFormat ? " from" : ""}`;
   }
 
   return formattedPercentage;

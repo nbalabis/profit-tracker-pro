@@ -96,7 +96,7 @@ export const calculateProfit = (
       (product.tax || 0) +
       (product.miscFee || 0) +
       (product.platformFee || 0);
-    profit += product.salePrice || 0 - totalFees;
+    profit += (product.salePrice || 0) - totalFees;
   });
 
   return profit;
@@ -135,5 +135,90 @@ export const calculatePercentProfitChange = (
   }
 
   const percentChange = ((currentProfit - prevProfit) / prevProfit) * 100;
+  return percentChange;
+};
+
+/* CALCULATE ROI FOR GIVEN TIME PERIOD */
+export const calculateROI = (
+  products: Product[],
+  timeFrame: string,
+  endDate?: Date,
+): number | null => {
+  // Calculate profit for current time period
+  const profit = calculateProfit(products, timeFrame, endDate);
+
+  // Get products sourced and sold within the time period
+  const productsSourced = filterProductsByTimeFrame(
+    products,
+    timeFrame,
+    "sourceDate",
+    endDate,
+  );
+  const productsSold = filterProductsByTimeFrame(
+    products,
+    timeFrame,
+    "saleDate",
+    endDate,
+  );
+
+  // Calculate total expenses for this time period
+  let expenses = 0;
+  productsSourced.forEach((product) => (expenses += product.sourcePrice));
+  productsSold.forEach((product) => {
+    const totalFees =
+      (product.shippingFee || 0) +
+      (product.tax || 0) +
+      (product.miscFee || 0) +
+      (product.platformFee || 0);
+
+    expenses += totalFees;
+  });
+
+  if (expenses === 0) {
+    return null; // Handle divide by zero
+  }
+
+  // Calculate and return ROI
+  const roi = (profit / expenses) * 100;
+  return roi;
+};
+
+/* CALCULATE PERCENT CHANGE IN ROI FOR GIVEN TIME PERIOD */
+export const calculatePercentROIChange = (
+  products: Product[],
+  timeFrame: string,
+): number | null => {
+  // Calculate ROI for current time period
+  const currentROI = calculateROI(products, timeFrame);
+
+  if (currentROI === null) {
+    return null;
+  }
+
+  // Determine previous time period endDate
+  const endDate = new Date();
+  endDate.setHours(0, 0, 0, 0);
+  switch (timeFrame) {
+    case "week":
+      endDate.setDate(endDate.getDate() - 7);
+      break;
+    case "month":
+      endDate.setMonth(endDate.getMonth() - 1);
+      break;
+    case "year":
+      endDate.setFullYear(endDate.getFullYear() - 1);
+      break;
+    default:
+      throw new Error("Invalid timeframe");
+  }
+
+  // Calculate ROI for previous time period
+  const prevROI = calculateROI(products, timeFrame, endDate);
+
+  if (prevROI === null) {
+    return null; // Handle divide by zero
+  }
+
+  const percentChange = ((currentROI - prevROI) / prevROI) * 100;
   return percentChange;
 };

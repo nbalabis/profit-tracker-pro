@@ -21,7 +21,7 @@ const RevenueCard: React.FC<RevenueCardProps> = ({ products, timeFrame }) => {
   //calculate percentage change from last period
   const percentChange = calculatePercentRevenueChange(products, timeFrame);
   const formattedPercentage = !!percentChange
-    ? formatPercentage(percentChange)
+    ? formatPercentage(percentChange, true)
     : "No sales";
 
   return (

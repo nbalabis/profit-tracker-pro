@@ -40,11 +40,11 @@ model Product {
   store       Store     @relation(fields: [storeId], references: [id], onDelete: Cascade)
   category    Category
   source      Source
-  sourceDate  DateTime  @db.Date()
+  sourceDate  DateTime
   sourcePrice Float
   status      Status    @default(UNLISTED)
   saleChannel Channel?
-  saleDate    DateTime? @db.Date()
+  saleDate    DateTime?
   salePrice   Float?
   platformFee Float?
   tax         Float?

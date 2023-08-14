@@ -20,9 +20,10 @@ const ProfitCard: React.FC<ProfitCardProps> = ({ products, timeFrame }) => {
 
   // Calculate the change in profit from the previous period
   const percentChange = calculatePercentProfitChange(products, timeFrame);
-  const formattedPercentage = !!percentChange
-    ? formatPercentage(percentChange, true)
-    : "No transactions";
+  const formattedPercentage =
+    percentChange !== null
+      ? formatPercentage(percentChange, true)
+      : "No transactions";
 
   return (
     <OverviewCard

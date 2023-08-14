@@ -18,9 +18,8 @@ const ROICard: React.FC<ROICardProps> = ({ products, timeFrame }) => {
 
   // Calculate the change in roi from the previous period
   const percentChange = calculatePercentROIChange(products, timeFrame);
-  const formattedPercentage = !!percentChange
-    ? formatPercentage(percentChange, true)
-    : "No ROI";
+  const formattedPercentage =
+    percentChange !== null ? formatPercentage(percentChange, true) : "No ROI";
 
   return (
     <OverviewCard

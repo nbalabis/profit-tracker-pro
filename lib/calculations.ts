@@ -28,31 +28,30 @@ export function calculateTotalRevenue(
 /* CALCULATE PERCENT CHANGE IN REVENUE FOR GIVEN TIME PERIOD */
 export function calculatePercentRevenueChange(
   products: Product[],
-  timeframe: string,
+  timeFrame: string,
 ): number | null {
-  const currentDate = new Date();
-  const prevDate = new Date(currentDate);
+  // Calculate revenue for current time period
+  const currentRevenue = calculateTotalRevenue(products, timeFrame);
 
-  switch (timeframe) {
+  // Determine previous time period endDate
+  const endDate = new Date();
+  endDate.setHours(0, 0, 0, 0);
+  switch (timeFrame) {
     case "week":
-      prevDate.setDate(currentDate.getDate() - 7);
+      endDate.setDate(endDate.getDate() - 7);
       break;
     case "month":
-      prevDate.setMonth(currentDate.getMonth() - 1);
+      endDate.setMonth(endDate.getMonth() - 1);
       break;
     case "year":
-      prevDate.setFullYear(currentDate.getFullYear() - 1);
+      endDate.setFullYear(endDate.getFullYear() - 1);
       break;
     default:
       throw new Error("Invalid timeframe");
   }
-  const currentRevenue = calculateTotalRevenue(
-    products,
-    timeframe,
-    currentDate,
-  );
 
-  const prevRevenue = calculateTotalRevenue(products, timeframe, prevDate);
+  // Calculate revenue for previous time period
+  const prevRevenue = calculateTotalRevenue(products, timeFrame, endDate);
 
   if (prevRevenue === 0) {
     return null; // Handle divide by zero

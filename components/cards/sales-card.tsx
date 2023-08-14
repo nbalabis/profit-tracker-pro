@@ -16,12 +16,10 @@ interface SalesCardProps {
 const SalesCard: React.FC<SalesCardProps> = ({ products, timeFrame }) => {
   // Calculate total sales this period
   const profit = calculateTotalSales(products, timeFrame);
-
   // Calculate the change in sales from the previous period
   const percentChange = calculatePercentSalesChange(products, timeFrame);
-  const formattedPercentage = !!percentChange
-    ? formatPercentage(percentChange, true)
-    : "No sales";
+  const formattedPercentage =
+    percentChange !== null ? formatPercentage(percentChange, true) : "No sales";
 
   return (
     <OverviewCard

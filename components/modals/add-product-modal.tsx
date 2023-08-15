@@ -81,11 +81,12 @@ const AddProductModal = () => {
   async function onSubmit(values: z.infer<typeof formSchema>) {
     try {
       setIsLoading(true);
+      const sourceDate = values.sourceDate.setHours(0, 0, 0, 0);
       const response = await axios.post("/api/product", {
         name: values.name,
         storeId,
         source: values.source,
-        sourceDate: values.sourceDate,
+        sourceDate: sourceDate,
         sourcePrice: values.sourcePrice,
         category: values.category,
       });

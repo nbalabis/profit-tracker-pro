@@ -3,10 +3,7 @@ import { Tag } from "lucide-react";
 
 import OverviewCard from "@/components/ui/overview-card";
 import { capitalize, formatPercentage, formatPrice } from "@/lib/utils";
-import {
-  calculatePercentSalesChange,
-  calculateTotalSales,
-} from "@/lib/calculations";
+import { calculatePercentSalesChange, calculateTotalSales } from "@/lib/calculations";
 
 interface SalesCardProps {
   products: Product[];

@@ -1,5 +1,6 @@
 "use client";
 
+import { Store } from "@prisma/client";
 import { UserButton } from "@clerk/nextjs";
 import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
@@ -9,9 +10,10 @@ import MobileSidebar from "./mobile-sidebar";
 
 interface NavbarProps {
   isSubscribed: boolean;
+  ownedStores: Store[];
 }
 
-const Navbar = ({ isSubscribed = false }: NavbarProps) => {
+const Navbar = ({ isSubscribed = false, ownedStores }: NavbarProps) => {
   const pathname = usePathname();
 
   const [currentRoute, setCurrentRoute] = useState(routeConfig[0]);
@@ -24,7 +26,7 @@ const Navbar = ({ isSubscribed = false }: NavbarProps) => {
   return (
     <div className="flex items-center justify-between p-3 pb-0 md:p-6 md:pb-0">
       <div className="flex items-center gap-5 md:gap-0">
-        <MobileSidebar isSubscribed={isSubscribed} />
+        <MobileSidebar isSubscribed={isSubscribed} ownedStores={ownedStores} />
         <div className="flex items-center gap-x-3">
           <div className="w-fit rounded-md bg-gray-700/10 p-2">
             <currentRoute.icon className="h-10 w-10 text-gray-700" />

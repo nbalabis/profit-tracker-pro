@@ -13,7 +13,7 @@ const SignedInLayout = async ({ children }: { children: React.ReactNode }) => {
         <Sidebar isSubscribed={isSubscribed} ownedStores={ownedStores} />
       </div>
       <main className="md:pl-72">
-        <Navbar isSubscribed={isSubscribed} />
+        <Navbar isSubscribed={isSubscribed} ownedStores={ownedStores} />
         {children}
       </main>
     </div>

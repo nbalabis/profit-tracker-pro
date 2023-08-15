@@ -1,4 +1,5 @@
 import { Menu } from "lucide-react";
+import { Store } from "@prisma/client";
 
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
@@ -6,9 +7,13 @@ import Sidebar from "./sidebar";
 
 interface MobileSidebarProps {
   isSubscribed: boolean;
+  ownedStores: Store[];
 }
 
-const MobileSidebar = ({ isSubscribed = false }: MobileSidebarProps) => {
+const MobileSidebar = ({
+  isSubscribed = false,
+  ownedStores,
+}: MobileSidebarProps) => {
   return (
     <Sheet>
       <SheetTrigger>
@@ -17,7 +22,7 @@ const MobileSidebar = ({ isSubscribed = false }: MobileSidebarProps) => {
         </Button>
       </SheetTrigger>
       <SheetContent side="left" className="p-0">
-        <Sidebar isSubscribed={isSubscribed} />
+        <Sidebar isSubscribed={isSubscribed} ownedStores={ownedStores} />
       </SheetContent>
     </Sheet>
   );

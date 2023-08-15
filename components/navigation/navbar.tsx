@@ -19,7 +19,7 @@ const Navbar = ({ isSubscribed = false }: NavbarProps) => {
   useEffect(() => {
     const newRoute = routeConfig.find((route) => pathname.includes(route.href));
     setCurrentRoute(newRoute || currentRoute);
-  }, [pathname]);
+  }, [pathname, currentRoute]);
 
   return (
     <div className="flex items-center justify-between p-3 pb-0 md:p-6 md:pb-0">

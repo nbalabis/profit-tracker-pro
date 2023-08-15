@@ -72,7 +72,7 @@ export function DataTable<TData, TValue>({
     } else if (pagination === "full") {
       table.setPageSize(10);
     }
-  }, [table]);
+  }, [table, pagination]);
 
   return (
     <div>

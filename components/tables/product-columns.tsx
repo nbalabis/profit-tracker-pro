@@ -77,7 +77,7 @@ const salePrice: ColumnDef<Product> = {
     </div>
   ),
   cell: ({ row }) => {
-    if (!row.getValue("salePrice"))
+    if (row.getValue("salePrice") === null)
       return <div className="text-right text-gray-400">Unsold</div>;
     const salePrice = parseFloat(row.getValue("salePrice"));
     const formatted = formatPrice(salePrice);

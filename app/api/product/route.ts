@@ -39,7 +39,7 @@ export async function POST(req: Request) {
         name,
         store: { connect: { id: storeId, ownerId: userId } },
         source,
-        sourceDate: new Date(sourceDate),
+        sourceDate,
         sourcePrice,
         category,
       },
@@ -95,7 +95,7 @@ export async function PATCH(req: Request) {
       data: {
         status: "SOLD",
         salePrice,
-        saleDate: new Date(saleDate),
+        saleDate,
         saleChannel,
         platformFee,
         tax,
@@ -147,7 +147,7 @@ export async function PUT(req: Request) {
       !name ||
       !source ||
       !sourceDate ||
-      !sourcePrice ||
+      sourcePrice === undefined ||
       !category
     ) {
       return new NextResponse("Missing required values", { status: 400 });

@@ -88,13 +88,14 @@ const SoldProductModal = () => {
   async function onSubmit(values: z.infer<typeof formSchema>) {
     try {
       setIsLoading(true);
+      values.sale_date.setHours(0, 0, 0, 0);
 
       // Send a PATCH request to the API
       await axios.patch("/api/product", {
         storeId: modal.storeId,
         productId: modal.productId,
         salePrice: values.sale_price,
-        saleDate: values.sale_date.toLocaleDateString(),
+        saleDate: values.sale_date,
         saleChannel: values.sale_channel,
         platformFee: values.platform_fees,
         tax: values.tax,

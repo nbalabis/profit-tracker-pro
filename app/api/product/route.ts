@@ -33,7 +33,7 @@ export async function POST(req: Request) {
         { status: 403 },
       );
     }
-    console.log("DB entry:", sourceDate);
+
     const response = await prismadb.product.create({
       data: {
         name,
@@ -95,7 +95,7 @@ export async function PATCH(req: Request) {
       data: {
         status: "SOLD",
         salePrice,
-        saleDate: new Date(saleDate),
+        saleDate,
         saleChannel,
         platformFee,
         tax,

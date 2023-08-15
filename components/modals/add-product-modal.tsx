@@ -82,7 +82,7 @@ const AddProductModal = () => {
     try {
       setIsLoading(true);
       values.sourceDate.setHours(0, 0, 0, 0);
-      console.log(values.sourceDate)
+
       const response = await axios.post("/api/product", {
         name: values.name,
         storeId,

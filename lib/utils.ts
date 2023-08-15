@@ -92,6 +92,10 @@ export const filterProductsByTimeFrame = (
 
   // Go through each product
   const filteredProducts = products.filter((product) => {
+    // Set product times to midnight
+    product.sourceDate.setHours(0, 0, 0, 0);
+    product?.saleDate?.setHours(0, 0, 0, 0);
+
     // If the product was purchased within the time period, add it to the list
     if (
       filterOn === "sourceDate" &&

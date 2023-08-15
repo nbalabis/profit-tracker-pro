@@ -221,3 +221,60 @@ export const calculatePercentROIChange = (
   const percentChange = ((currentROI - prevROI) / prevROI) * 100;
   return percentChange;
 };
+
+/* CALCULATE TOTAL SALES FOR GIVEN TIME PERIOD */
+export const calculateTotalSales = (
+  products: Product[],
+  timeFrame: string,
+  endDate?: Date,
+) => {
+  // Get products sold within the time period
+  const productsSold = filterProductsByTimeFrame(
+    products,
+    timeFrame,
+    "saleDate",
+    endDate,
+  );
+
+  // Add up total sales for this time period
+  let totalSales = 0;
+  productsSold.forEach((product) => totalSales++);
+
+  return totalSales;
+};
+
+/* CALCULATE PERCENT CHANGE IN TOTAL SALES FOR GIVEN TIME PERIOD */
+export const calculatePercentSalesChange = (
+  products: Product[],
+  timeFrame: string,
+) => {
+  // Calculate total sales for current time period
+  const currentSales = calculateTotalSales(products, timeFrame);
+
+  // Determine previous time period endDate
+  const endDate = new Date();
+  endDate.setHours(0, 0, 0, 0);
+  switch (timeFrame) {
+    case "week":
+      endDate.setDate(endDate.getDate() - 7);
+      break;
+    case "month":
+      endDate.setMonth(endDate.getMonth() - 1);
+      break;
+    case "year":
+      endDate.setFullYear(endDate.getFullYear() - 1);
+      break;
+    default:
+      throw new Error("Invalid timeframe");
+  }
+
+  // Calculate total sales for previous time period
+  const prevSales = calculateTotalSales(products, timeFrame, endDate);
+
+  if (prevSales === 0) {
+    return null; // Handle divide by zero
+  }
+
+  const percentChange = ((currentSales - prevSales) / prevSales) * 100;
+  return percentChange;
+};

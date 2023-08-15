@@ -50,9 +50,9 @@ export const formatPercentage = (
   } else {
     const sign = percentage >= 0 ? "+" : "-";
     const absPercentageIncrease = Math.abs(percentage);
-    formattedPercentage = `${
-      changeFormat ? sign : ""
-    }${absPercentageIncrease.toFixed(1)}%${changeFormat ? " from" : ""}`;
+    formattedPercentage = `${sign}${absPercentageIncrease.toFixed(1)}%${
+      changeFormat ? " from" : ""
+    }`;
   }
 
   return formattedPercentage;

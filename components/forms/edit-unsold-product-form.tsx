@@ -63,20 +63,21 @@ const EditUnsoldProductForm: React.FC<EditUnsoldProductFormProps> = ({
 
   const [isLoading, setIsLoading] = useState(false);
 
-  if (!product) return null;
-
+  
   /* FORM DEFINITION */
   const form = useForm<z.infer<typeof unsoldFormSchema>>({
     resolver: zodResolver(unsoldFormSchema),
     defaultValues: {
-      name: product.name,
-      source: product.source,
-      source_date: convertLocalDateToUTC(product.sourceDate),
-      source_price: product.sourcePrice,
-      category: product.category,
+      name: product?.name,
+      source: product?.source,
+      source_date: convertLocalDateToUTC(product?.sourceDate || null),
+      source_price: product?.sourcePrice,
+      category: product?.category,
     },
   });
 
+  if (!product) return null;
+  
   /* SUBMIT HANDLER */
   async function onSubmit(values: z.infer<typeof unsoldFormSchema>) {
     try {

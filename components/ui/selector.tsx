@@ -15,6 +15,7 @@ const Selector = React.forwardRef<
     {...props}
   />
 ));
+Selector.displayName = "Selector";
 
 interface SelectOptionProps {
   value: string;
@@ -41,5 +42,6 @@ const SelectOption: React.FC<SelectOptionProps> = ({
     </p>
   );
 };
+SelectOption.displayName = "SelectOption";
 
 export { Selector, SelectOption };

@@ -76,28 +76,27 @@ const EditSoldProductForm: React.FC<EditSoldProductFormProps> = ({
 
   const [isLoading, setIsLoading] = useState(false);
 
-  
   /* FORM DEFINITION */
   const form = useForm<z.infer<typeof soldFormSchema>>({
     resolver: zodResolver(soldFormSchema),
     defaultValues: {
       name: product?.name,
       source: product?.source,
-      source_date: convertLocalDateToUTC(product?.sourceDate || null),
-      source_price: product?.sourcePrice,
+      source_date: product?.sourceDate,
+      source_price: product?.sourcePrice || 0,
       category: product?.category,
-      sale_price: product?.salePrice || undefined,
-      sale_date: convertLocalDateToUTC(product?.saleDate || null),
+      sale_price: product?.salePrice || 0,
+      sale_date: product?.saleDate || undefined,
       sale_channel: product?.saleChannel || undefined,
-      platform_fees: product?.platformFee || undefined,
-      tax: product?.tax || undefined,
-      shipping_fees: product?.shippingFee || undefined,
-      misc_fees: product?.miscFee || undefined,
+      platform_fees: product?.platformFee || 0,
+      tax: product?.tax || 0,
+      shipping_fees: product?.shippingFee || 0,
+      misc_fees: product?.miscFee || 0,
     },
   });
 
   if (!product) return null;
-  
+
   /* SUBMIT HANDLER */
   async function onSubmit(values: z.infer<typeof soldFormSchema>) {
     try {

@@ -147,7 +147,7 @@ export async function PUT(req: Request) {
       !name ||
       !source ||
       !sourceDate ||
-      !sourcePrice ||
+      sourcePrice === undefined ||
       !category
     ) {
       return new NextResponse("Missing required values", { status: 400 });

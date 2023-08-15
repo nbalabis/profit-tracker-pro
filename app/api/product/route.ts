@@ -33,14 +33,13 @@ export async function POST(req: Request) {
         { status: 403 },
       );
     }
-    
-    sourceDate.setHours(0, 0, 0, 0);
+
     const response = await prismadb.product.create({
       data: {
         name,
         store: { connect: { id: storeId, ownerId: userId } },
         source,
-        sourceDate,
+        sourceDate: new Date(sourceDate),
         sourcePrice,
         category,
       },

@@ -85,7 +85,7 @@ const AddProductModal = () => {
         name: values.name,
         storeId,
         source: values.source,
-        sourceDate: values.sourceDate,
+        sourceDate: values.sourceDate.toLocaleDateString(),
         sourcePrice: values.sourcePrice,
         category: values.category,
       });

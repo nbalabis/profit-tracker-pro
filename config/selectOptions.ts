@@ -1,11 +1,18 @@
+import { Box, Brush, Dumbbell, Home, Joystick, Shirt, Tv } from "lucide-react";
+
 export const categories = [
-  { title: "Beauty", value: "BEAUTY", icon: "💄", color: "#f43f5e" },
-  { title: "Clothing", value: "CLOTHING", icon: "👕", color: "#7c3aed" },
-  { title: "Electronics", value: "ELECTRONICS", icon: "📹", color: "#38bdf8" },
-  { title: "Home", value: "HOME", icon: "🏠", color: "#14b8a6" },
-  { title: "Toys & Collectibles", value: "TOYS", icon: "🧸", color: "#fbbf24" },
-  { title: "Sports", value: "SPORTS", icon: "⚽️", color: "#16a34a" },
-  { title: "Other", value: "OTHER", icon: "📦", color: "#a1a1aa" },
+  { title: "Beauty", value: "BEAUTY", icon: Brush, color: "#f43f5e" },
+  { title: "Clothing", value: "CLOTHING", icon: Shirt, color: "#7c3aed" },
+  { title: "Electronics", value: "ELECTRONICS", icon: Tv, color: "#38bdf8" },
+  { title: "Home", value: "HOME", icon: Home, color: "#14b8a6" },
+  {
+    title: "Toys & Collectibles",
+    value: "TOYS",
+    icon: Joystick,
+    color: "#fbbf24",
+  },
+  { title: "Sports", value: "SPORTS", icon: Dumbbell, color: "#16a34a" },
+  { title: "Other", value: "OTHER", icon: Box, color: "#a1a1aa" },
 ];
 
 export const sources = [

@@ -289,8 +289,10 @@ const EditSoldProductForm: React.FC<EditSoldProductFormProps> = ({
                                 value={category.value}
                                 key={category.value}
                               >
-                                <span className="pr-2">{category.icon}</span>
-                                {category.title}
+                                <div className="flex">
+                                  <category.icon className="mr-2 h-4 w-4" />
+                                  {category.title}
+                                </div>
                               </SelectItem>
                             ))}
                           </SelectContent>

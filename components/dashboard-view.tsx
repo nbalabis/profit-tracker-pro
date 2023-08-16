@@ -9,6 +9,7 @@ import SalesCard from "@/components/cards/sales-card";
 import ProfitCard from "@/components/cards/profit-card";
 import SalesGraph from "@/components/graphs/sales-graph";
 import RevenueCard from "@/components/cards/revenue-card";
+import CategoryGraph from "@/components/graphs/category-graph";
 import { SelectOption, Selector } from "@/components/ui/selector";
 
 interface DashboardViewProps {
@@ -61,7 +62,16 @@ const DashboardView: React.FC<DashboardViewProps> = ({ products }) => {
               </CardContent>
             </Card>
           </div>
-          <Card className="aspect-square">Category Chart</Card>
+          <Card className="aspect-square">
+            <CardHeader>
+              <CardTitle className="text-md font-medium">
+                Sales by Category
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="aspect-square h-full lg:aspect-auto">
+              <CategoryGraph products={products} timeFrame={timeFrame} />
+            </CardContent>
+          </Card>
         </div>
         <div>
           <Card className="h-96">Transactions Table</Card>

@@ -46,13 +46,13 @@ const CategoryGraph: React.FC<CategoryGraphProps> = ({
     const index = data.findIndex((item) => item.value === product.category);
 
     if (index !== -1) {
-      data[index].sales++;
+      data[index].sales += product.salePrice || 0;
     } else {
       data.push({
         label: category.title,
         value: product.category,
         Icon: category.icon,
-        sales: 1,
+        sales: product.salePrice || 0,
       });
     }
   });

@@ -6,7 +6,6 @@ import { ClerkProvider } from "@clerk/nextjs";
 import { siteConfig } from "@/config/site";
 import { Toaster } from "@/components/ui/toaster";
 import { ModalProvider } from "@/components/modals/modal-provider";
-import { cn } from "@/lib/utils";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -23,7 +22,7 @@ export default function RootLayout({
   return (
     <ClerkProvider>
       <html lang="en">
-        <body className={cn("bg-slate-50", inter.className)}>
+        <body className={inter.className}>
           <main className="overflow-x-hidden">{children}</main>
           <Toaster />
           <ModalProvider />

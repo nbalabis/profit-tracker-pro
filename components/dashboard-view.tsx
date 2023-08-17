@@ -3,7 +3,6 @@
 import { useState } from "react";
 import { Product } from "@prisma/client";
 
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import ROICard from "@/components/cards/roi-card";
 import SalesCard from "@/components/cards/sales-card";
 import ProfitCard from "@/components/cards/profit-card";
@@ -11,6 +10,14 @@ import SalesGraph from "@/components/graphs/sales-graph";
 import RevenueCard from "@/components/cards/revenue-card";
 import CategoryGraph from "@/components/graphs/category-graph";
 import { SelectOption, Selector } from "@/components/ui/selector";
+import TransactionsTable from "@/components/tables/transactions-table";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 
 interface DashboardViewProps {
   products: Product[];
@@ -74,7 +81,19 @@ const DashboardView: React.FC<DashboardViewProps> = ({ products }) => {
           </Card>
         </div>
         <div>
-          <Card className="h-96">Transactions Table</Card>
+          <Card className="border-0">
+            <CardHeader>
+              <CardTitle className="text-md font-medium">
+                Transactions
+              </CardTitle>
+              <CardDescription>
+                All products bought/sold in the last {timeFrame}
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="">
+              <TransactionsTable products={products} timeFrame={timeFrame} />
+            </CardContent>
+          </Card>
         </div>
       </div>
     </>

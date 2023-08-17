@@ -1,18 +1,30 @@
+"use client";
+
+import { useEffect } from "react";
 import { Column } from "@tanstack/react-table";
 import { ChevronDown, ChevronUp, ChevronsUpDown } from "lucide-react";
 
-import type { Product } from "@prisma/client";
 import { Button } from "@/components/ui/button";
 
 interface SortedColumnHeaderProps {
-  column: Column<Product, unknown>;
+  column: Column<any>;
   title: string;
+  initialSort?: boolean;
 }
 
 const SortedColumnHeader: React.FC<SortedColumnHeaderProps> = ({
   column,
   title,
+  initialSort,
 }) => {
+  // Set initial sort
+  useEffect(() => {
+    if (initialSort) {
+      column.toggleSorting();
+      console.log("initial sort");
+    }
+  }, [initialSort, column]);
+
   return (
     <Button
       variant="ghost"

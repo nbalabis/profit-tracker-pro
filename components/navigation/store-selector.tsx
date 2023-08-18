@@ -52,7 +52,7 @@ const StoreSelector: React.FC<StoreSelectorProps> = ({ stores, className }) => {
           aria-expanded={open}
           aria-label="Select a team"
           className={cn(
-            "group flex w-full cursor-pointer justify-start rounded-lg p-3 py-5 text-sm font-medium text-muted-foreground transition hover:bg-secondary/10 hover:text-secondary",
+            "group flex w-full cursor-pointer justify-start rounded-lg p-3 py-5 text-sm font-medium text-muted-foreground transition hover:bg-secondary-foreground/10 hover:text-secondary-foreground hover:shadow-sm",
             className,
           )}
         >
@@ -67,9 +67,9 @@ const StoreSelector: React.FC<StoreSelectorProps> = ({ stores, className }) => {
           <ChevronDown className="ml-auto h-4 w-4 shrink-0 opacity-50" />
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="w-[264px] border-secondary/10 bg-secondary/10 p-0">
+      <PopoverContent className="w-[264px] border-secondary-foreground/10 bg-secondary-foreground/10 p-0">
         <Command>
-          <CommandList className="bg-primary">
+          <CommandList className="bg-secondary">
             {/* Dispaly owned stores */}
             {stores.length > 0 && (
               <CommandGroup>
@@ -80,7 +80,7 @@ const StoreSelector: React.FC<StoreSelectorProps> = ({ stores, className }) => {
                       setCurrentStore(store);
                       setOpen(false);
                     }}
-                    className="text-sm text-muted-foreground transition aria-selected:bg-secondary/10 aria-selected:text-secondary"
+                    className="text-sm text-muted-foreground transition aria-selected:bg-secondary-foreground/10 aria-selected:text-secondary-foreground"
                   >
                     <div className="flex flex-1 items-center">
                       <StoreIcon className={"mr-3 h-5 w-5"} />

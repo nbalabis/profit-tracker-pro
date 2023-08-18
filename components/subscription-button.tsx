@@ -36,11 +36,13 @@ const SubscriptionButton = ({
       className={cn(
         isSubscribed
           ? "bg-secondary text-secondary-foreground hover:bg-secondary/80"
-          : "bg-gradient-to-r from-[#3361EB] to-[#59C3C8] text-secondary",
+          : "bg-gradient-to-r from-[#3361EB] to-[#59C3C8] text-secondary-foreground",
       )}
     >
       {isSubscribed ? "Manage Subscription" : "Subscribe"}
-      {!isSubscribed && <Zap className="ml-2 h-4 w-4 fill-white" />}
+      {!isSubscribed && (
+        <Zap className="ml-2 h-4 w-4 fill-secondary-foreground" />
+      )}
     </Button>
   );
 };

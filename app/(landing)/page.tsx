@@ -152,7 +152,7 @@ const LandingPage = () => {
         <div className="flex w-full  flex-col items-center gap-6 md:flex-row md:gap-24">
           <div className="flex w-full flex-col gap-6 md:w-1/2">
             <h2 className="text-center text-3xl font-bold tracking-tight ">
-              <Balancer>Made by resellers for resellers</Balancer>
+              <Balancer>Made by resellers for resellers.<br/>Use it for free</Balancer>
             </h2>
           </div>
           <div className="flex w-full flex-col gap-6 text-center md:w-1/2 md:text-start">

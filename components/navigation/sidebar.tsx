@@ -24,7 +24,7 @@ const Sidebar = ({ isSubscribed = false, ownedStores = [] }: SidebarProps) => {
   const { storeId } = useParams();
 
   return (
-    <div className="flex h-full flex-col space-y-4 bg-primary py-4 text-secondary-foreground">
+    <div className="flex h-full flex-col space-y-4 bg-secondary py-4 text-secondary-foreground">
       <div className="flex-1 px-3 py-2">
         <Link href="/dashboard" className="mb-14 flex items-center pl-3">
           <div className="relative mr-4 h-8 w-8">

@@ -69,7 +69,7 @@ const StoreSelector: React.FC<StoreSelectorProps> = ({ stores, className }) => {
       </PopoverTrigger>
       <PopoverContent className="w-[264px] border-secondary-foreground/10 bg-secondary-foreground/10 p-0">
         <Command>
-          <CommandList className="bg-primary">
+          <CommandList className="bg-secondary">
             {/* Dispaly owned stores */}
             {stores.length > 0 && (
               <CommandGroup>

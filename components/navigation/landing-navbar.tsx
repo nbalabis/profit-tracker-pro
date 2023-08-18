@@ -13,7 +13,7 @@ const montserrat = Montserrat({ weight: "600", subsets: ["latin"] });
 const LandingNavbar = () => {
   return (
     <nav className="flex w-full items-center px-6 py-6 md:px-24">
-      <Link href="/" className="flex w-1/4 items-center justify-start">
+      <Link href="/" className="flex md:w-1/4 w-full items-center justify-start">
         <div className="relative mr-4 h-8 w-8">
           <Image
             fill

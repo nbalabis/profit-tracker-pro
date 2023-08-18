@@ -42,7 +42,7 @@ const LandingNavbar = () => {
           ))}
         </div>
         <div className="basis-1/3 items-center text-end">
-          <Link href="/sign-in">
+          <Link href="/sign-up">
             <Button size="lg" className="rounded-full">
               Get Started
             </Button>

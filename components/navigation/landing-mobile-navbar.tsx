@@ -55,7 +55,7 @@ const LandingMobileNavbar = () => {
           </SheetClose>
         ))}
         <SheetClose asChild>
-          <Link href="/sign-in" className="mt-6 text-center">
+          <Link href="/sign-up" className="mt-6 text-center">
             <Button size="lg" className="rounded-full">
               Get Started
             </Button>

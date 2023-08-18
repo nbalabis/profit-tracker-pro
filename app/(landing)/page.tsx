@@ -1,8 +1,7 @@
-import Link from "next/link";
 import { auth } from "@clerk/nextjs";
 import { redirect } from "next/navigation";
 
-import { Button } from "@/components/ui/button";
+import LandingNavbar from "@/components/navigation/landing-navbar";
 
 const LandingPage = () => {
   // If user is logged in, redirect to dashboard
@@ -10,16 +9,15 @@ const LandingPage = () => {
   if (userId) redirect("/dashboard");
 
   return (
-    <div>
+    <div className="">
+      <LandingNavbar />
+      <div>Hero</div>
+      <div className="">Demo</div>
       <div>
-        <Link href="sign-in">
-          <Button>Log In</Button>
-        </Link>
-        <Link href="sign-up">
-          <Button>Sign Up</Button>
-        </Link>
+        <div>Feature1</div>
+        <div>Feature2</div>
       </div>
-      <h1>Landing Page</h1>
+      <div>CTA</div>
     </div>
   );
 };

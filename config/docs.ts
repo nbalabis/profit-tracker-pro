@@ -39,4 +39,10 @@ export const routeConfig = [
   },
 ];
 
+export const landingRouteConfig = [
+  { label: "About", href: "#about" },
+  { label: "Features", href: "#features" },
+  { label: "Pricing", href: "#pricing" },
+];
+
 export type RouteConfig = typeof routeConfig;

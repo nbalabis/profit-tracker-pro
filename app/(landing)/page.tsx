@@ -1,9 +1,10 @@
+import Link from "next/link";
+import Image from "next/image";
 import { auth } from "@clerk/nextjs";
 import { redirect } from "next/navigation";
 
-import LandingNavbar from "@/components/navigation/landing-navbar";
-import Link from "next/link";
 import { Button } from "@/components/ui/button";
+import LandingNavbar from "@/components/navigation/landing-navbar";
 
 const LandingPage = () => {
   // If user is logged in, redirect to dashboard
@@ -38,8 +39,17 @@ const LandingPage = () => {
         </div>
         <div className="hidden w-1/4 bg-gradient-to-l from-transparent from-90% to-background md:flex"></div>
       </div>
-      <div className="" id="about">
-        Demo
+      <div
+        className="flex items-center justify-center bg-muted py-24"
+        id="about"
+      >
+        <div className="relative flex aspect-video w-11/12 overflow-hidden rounded-lg shadow-2xl md:w-3/4">
+          <Image
+            src="/images/dashboard-screenshot.png"
+            fill
+            alt="Dashboard Screenshot"
+          />
+        </div>
       </div>
       <div>
         <div>Feature1</div>

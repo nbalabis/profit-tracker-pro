@@ -16,7 +16,7 @@ const CategoryGraphTooltip: React.FC<CategoryGraphTooltipProps> = ({
     const { label, sales, Icon } = payload[0].payload;
     return (
       <div
-        className="absolute flex flex-col items-center justify-center gap-3"
+        className="absolute flex flex-col items-center justify-center gap-3 text-center"
         style={{ width: `${sideLength}px`, height: `${sideLength}px` }}
       >
         <Icon className="h-10 w-10" />

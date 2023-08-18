@@ -24,7 +24,7 @@ const Navbar = ({ isSubscribed = false, ownedStores }: NavbarProps) => {
   }, [pathname, currentRoute]);
 
   return (
-    <div className="flex items-center justify-between p-3 pb-0 md:p-6 md:pb-0">
+    <div className="relative z-10 flex items-center justify-between bg-background p-3 pb-0 md:p-6 md:pb-0">
       <div className="flex items-center gap-5 md:gap-0">
         <MobileSidebar isSubscribed={isSubscribed} ownedStores={ownedStores} />
         <div className="flex items-center gap-x-3">

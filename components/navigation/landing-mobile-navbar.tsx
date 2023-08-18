@@ -19,7 +19,7 @@ const montserrat = Montserrat({ weight: "600", subsets: ["latin"] });
 const LandingMobileNavbar = () => {
   return (
     <Sheet>
-      <SheetTrigger className="grow-1 flex md:hidden">
+      <SheetTrigger className="flex md:hidden">
         <Menu className="h-6 w-6" />
       </SheetTrigger>
       <SheetContent

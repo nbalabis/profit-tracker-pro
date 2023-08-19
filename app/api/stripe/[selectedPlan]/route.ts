@@ -1,13 +1,17 @@
 import { auth, currentUser } from "@clerk/nextjs";
 import { NextResponse } from "next/server";
 
-import prismadb from "@/lib/prismadb";
 import stripe from "@/lib/stripe";
+import prismadb from "@/lib/prismadb";
 import { absoluteUrl } from "@/lib/utils";
+import { subscriptionPlans } from "@/config/subscription";
 
 const settingsUrl = absoluteUrl("/settings");
 
-export async function GET() {
+export async function GET(
+  request: Request,
+  context: { params: { selectedPlan: string } },
+) {
   try {
     const { userId } = auth();
     const user = await currentUser();
@@ -29,6 +33,10 @@ export async function GET() {
       return new NextResponse(JSON.stringify({ url: stripeSession.url }));
     }
 
+    const selectedPlan = subscriptionPlans.find((plan) => {
+      return plan.plan === context.params.selectedPlan;
+    });
+
     const stripeSession = await stripe.checkout.sessions.create({
       success_url: settingsUrl,
       cancel_url: settingsUrl,
@@ -36,22 +44,7 @@ export async function GET() {
       mode: "subscription",
       billing_address_collection: "auto",
       customer_email: user.emailAddresses[0].emailAddress,
-      line_items: [
-        {
-          price_data: {
-            currency: "usd",
-            product_data: {
-              name: "Subscription",
-              description: "Access to subscription tier",
-            },
-            unit_amount: 1000,
-            recurring: {
-              interval: "month",
-            },
-          },
-          quantity: 1,
-        },
-      ],
+      line_items: [selectedPlan?.data || subscriptionPlans[0].data],
       metadata: { userId },
     });
 

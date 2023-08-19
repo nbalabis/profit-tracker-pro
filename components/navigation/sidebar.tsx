@@ -11,15 +11,22 @@ import { siteConfig } from "@/config/site";
 import { routeConfig } from "@/config/docs";
 import SubscriptionButton from "@/components/subscription-button";
 import StoreSelector from "./store-selector";
+import { Progress } from "../ui/progress";
+import { TRIAL_PRODUCT_LIMIT } from "@/config/subscription";
 
 const montserrat = Montserrat({ weight: "600", subsets: ["latin"] });
 
 interface SidebarProps {
   isSubscribed: boolean;
   ownedStores: Store[];
+  remainingProducts: number;
 }
 
-const Sidebar = ({ isSubscribed = false, ownedStores = [] }: SidebarProps) => {
+const Sidebar = ({
+  isSubscribed = false,
+  ownedStores = [],
+  remainingProducts,
+}: SidebarProps) => {
   const pathname = usePathname();
   const { storeId } = useParams();
 
@@ -63,8 +70,22 @@ const Sidebar = ({ isSubscribed = false, ownedStores = [] }: SidebarProps) => {
         </div>
       </div>
       {!isSubscribed && (
-        <div className="px-4 text-center">
-          <SubscriptionButton isSubscribed={isSubscribed} />
+        <div className="flex items-center justify-center">
+          <div className="flex flex-col items-center justify-center rounded-lg bg-muted-foreground/50 px-8 py-6">
+            <p className="text-xs">Free Items Tracked</p>
+            <Progress
+              className="my-1"
+              value={
+                ((TRIAL_PRODUCT_LIMIT - remainingProducts) /
+                  TRIAL_PRODUCT_LIMIT) *
+                100
+              }
+            />
+            <p className="mb-3 text-xs">
+              {TRIAL_PRODUCT_LIMIT - remainingProducts} / {TRIAL_PRODUCT_LIMIT}
+            </p>
+            <SubscriptionButton isSubscribed={isSubscribed} />
+          </div>
         </div>
       )}
       {ownedStores.length > 0 && (

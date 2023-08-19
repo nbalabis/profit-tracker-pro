@@ -55,7 +55,7 @@ const LandingPage = () => {
       >
         <div className="relative flex aspect-video w-11/12 overflow-hidden rounded-lg shadow-2xl md:w-3/4">
           <Image
-            src="/images/dashboard-screenshot.png"
+            src="/images/dashboard-screenshot-monthly.png"
             fill
             alt="Dashboard Screenshot"
           />
@@ -90,21 +90,21 @@ const LandingPage = () => {
           <div className="relative flex h-56 w-full flex-col rounded-2xl bg-muted md:w-1/2">
             <div className="absolute left-1/2 top-1/2 z-30 h-32 w-80 -translate-x-1/2 -translate-y-full scale-105 transform overflow-hidden rounded-lg border shadow-lg">
               <Image
-                src="/images/profit-card-screenshot.png"
+                src="/images/profit-card-screenshot-monthly.png"
                 alt="Profit Card Screenshot"
                 fill
               />
             </div>
             <div className="absolute left-1/2 top-1/2 z-20 h-32 w-80 -translate-x-1/2 -translate-y-1/2 transform overflow-hidden rounded-lg border shadow-lg">
               <Image
-                src="/images/roi-card-screenshot.png"
+                src="/images/roi-card-screenshot-monthly.png"
                 alt="ROI Card Screenshot"
                 fill
               />
             </div>
             <div className="absolute left-1/2 top-1/2 z-10 h-32 w-80 -translate-x-1/2 scale-95 transform overflow-hidden rounded-lg border shadow-lg">
               <Image
-                src="/images/revenue-card-screenshot.png"
+                src="/images/revenue-card-screenshot-monthly.png"
                 alt="Revenue Card Screenshot"
                 fill
               />
@@ -152,7 +152,11 @@ const LandingPage = () => {
         <div className="flex w-full  flex-col items-center gap-6 md:flex-row md:gap-24">
           <div className="flex w-full flex-col gap-6 md:w-1/2">
             <h2 className="text-center text-3xl font-bold tracking-tight ">
-              <Balancer>Made by resellers for resellers.<br/>Use it for free</Balancer>
+              <Balancer>
+                Made by resellers for resellers.
+                <br />
+                Use it for free
+              </Balancer>
             </h2>
           </div>
           <div className="flex w-full flex-col gap-6 text-center md:w-1/2 md:text-start">

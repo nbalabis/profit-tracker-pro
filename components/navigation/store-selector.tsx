@@ -2,7 +2,12 @@
 
 import { useState } from "react";
 import { useParams, usePathname, useRouter } from "next/navigation";
-import { Check, ChevronDown, Store as StoreIcon } from "lucide-react";
+import {
+  Check,
+  ChevronDown,
+  PlusCircle,
+  Store as StoreIcon,
+} from "lucide-react";
 
 import { cn } from "@/lib/utils";
 import { Store } from "@prisma/client";
@@ -80,7 +85,7 @@ const StoreSelector: React.FC<StoreSelectorProps> = ({ stores, className }) => {
                       setCurrentStore(store);
                       setOpen(false);
                     }}
-                    className="text-sm text-muted-foreground transition aria-selected:bg-secondary-foreground/10 aria-selected:text-secondary-foreground"
+                    className="cursor-pointer text-sm text-muted-foreground transition aria-selected:bg-secondary-foreground/10 aria-selected:text-secondary-foreground"
                   >
                     <div className="flex flex-1 items-center">
                       <StoreIcon className={"mr-3 h-5 w-5"} />
@@ -98,6 +103,18 @@ const StoreSelector: React.FC<StoreSelectorProps> = ({ stores, className }) => {
                 ))}
               </CommandGroup>
             )}
+            <CommandItem
+              onSelect={() => {
+                router.push("/create-store");
+                setOpen(false);
+              }}
+              className="cursor-pointer text-sm text-muted-foreground transition aria-selected:bg-secondary-foreground/10 aria-selected:text-secondary-foreground"
+            >
+              <div className="flex flex-1 items-center">
+                <PlusCircle className={"mr-3 h-5 w-5"} />
+                Add a Store
+              </div>
+            </CommandItem>
           </CommandList>
         </Command>
       </PopoverContent>

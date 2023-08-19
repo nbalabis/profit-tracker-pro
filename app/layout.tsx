@@ -2,6 +2,7 @@ import "./globals.css";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import { ClerkProvider } from "@clerk/nextjs";
+import { Analytics } from "@vercel/analytics/react";
 
 import { siteConfig } from "@/config/site";
 import { Toaster } from "@/components/ui/toaster";
@@ -25,6 +26,7 @@ export default function RootLayout({
         <body className={inter.className}>
           <main className="overflow-x-hidden">{children}</main>
           <Toaster />
+          <Analytics />
           <ModalProvider />
         </body>
       </html>

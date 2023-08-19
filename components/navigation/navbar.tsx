@@ -11,9 +11,14 @@ import MobileSidebar from "./mobile-sidebar";
 interface NavbarProps {
   isSubscribed: boolean;
   ownedStores: Store[];
+  remainingProducts: number;
 }
 
-const Navbar = ({ isSubscribed = false, ownedStores }: NavbarProps) => {
+const Navbar = ({
+  isSubscribed = false,
+  ownedStores,
+  remainingProducts,
+}: NavbarProps) => {
   const pathname = usePathname();
 
   const [currentRoute, setCurrentRoute] = useState(routeConfig[0]);
@@ -26,7 +31,11 @@ const Navbar = ({ isSubscribed = false, ownedStores }: NavbarProps) => {
   return (
     <div className="relative z-10 flex items-center justify-between bg-background p-3 pb-0 md:p-6 md:pb-0">
       <div className="flex items-center gap-5 md:gap-0">
-        <MobileSidebar isSubscribed={isSubscribed} ownedStores={ownedStores} />
+        <MobileSidebar
+          isSubscribed={isSubscribed}
+          ownedStores={ownedStores}
+          remainingProducts={remainingProducts}
+        />
         <div className="flex items-center gap-x-3">
           <div className="w-fit rounded-md bg-gray-700/10 p-2">
             <currentRoute.icon className="h-10 w-10 text-gray-700" />

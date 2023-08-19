@@ -1,31 +1,40 @@
 "use client";
 
-import { useState } from "react";
 import axios from "axios";
+import { useState } from "react";
 import { Zap } from "lucide-react";
 
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
+import { useProModal } from "@/hooks/use-pro-modal";
 
 interface SubscriptionButtonProps {
   isSubscribed: boolean;
+  selectedPlan?: string;
 }
 
 const SubscriptionButton = ({
   isSubscribed = false,
+  selectedPlan,
 }: SubscriptionButtonProps) => {
   const [loading, setLoading] = useState(false);
 
-  const onClick = async () => {
-    try {
-      setLoading(true);
-      const response = await axios.get("/api/stripe");
+  const proModal = useProModal();
 
-      window.location.href = response.data.url;
-    } catch (error) {
-      console.log("BILLING_ERROR", error);
-    } finally {
-      setLoading(false);
+  const onClick = async () => {
+    if (!isSubscribed) {
+      proModal.onOpen();
+    } else {
+      try {
+        setLoading(true);
+        const response = await axios.get(`/api/stripe/manage`);
+
+        window.location.href = response.data.url;
+      } catch (error) {
+        console.log("BILLING_ERROR", error);
+      } finally {
+        setLoading(false);
+      }
     }
   };
 

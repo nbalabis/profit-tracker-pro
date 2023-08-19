@@ -8,11 +8,13 @@ import Sidebar from "./sidebar";
 interface MobileSidebarProps {
   isSubscribed: boolean;
   ownedStores: Store[];
+  remainingProducts: number;
 }
 
 const MobileSidebar = ({
   isSubscribed = false,
   ownedStores,
+  remainingProducts,
 }: MobileSidebarProps) => {
   return (
     <Sheet>
@@ -22,7 +24,11 @@ const MobileSidebar = ({
         </Button>
       </SheetTrigger>
       <SheetContent side="left" className="p-0">
-        <Sidebar isSubscribed={isSubscribed} ownedStores={ownedStores} />
+        <Sidebar
+          isSubscribed={isSubscribed}
+          ownedStores={ownedStores}
+          remainingProducts={remainingProducts}
+        />
       </SheetContent>
     </Sheet>
   );

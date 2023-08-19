@@ -61,6 +61,32 @@ export const checkRemainingTrialProducts = async () => {
   return isValidTrial;
 };
 
+export const getRemainingTrialProducts = async (): Promise<number> => {
+  const { userId } = auth();
+
+  if (!userId) return 0;
+
+  const userTrial = await prismadb.userTrial.findUnique({
+    where: { userId },
+  });
+
+  if (!userTrial) {
+    await prismadb.userTrial.create({
+      data: {
+        userId,
+        storesRemaining: TRIAL_STORE_LIMIT,
+        productsRemaining: TRIAL_PRODUCT_LIMIT,
+      },
+    });
+
+    return TRIAL_PRODUCT_LIMIT;
+  }
+
+  const productsRemaining = userTrial.productsRemaining;
+
+  return productsRemaining;
+};
+
 export const checkSubscription = async () => {
   const { userId } = auth();
 

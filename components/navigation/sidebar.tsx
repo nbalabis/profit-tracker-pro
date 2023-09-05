@@ -35,7 +35,7 @@ const Sidebar = ({
       <div className="flex-1 px-3 py-2">
         <Link href="/dashboard" className="mb-14 flex items-center pl-3">
           <div className="relative mr-4 h-8 w-8">
-            <Image fill alt="logo" src="/images/logo.png" />
+            <Image fill alt="logo" src="/images/logo.svg" />
           </div>
           <h1 className={cn("text-2xl font-bold", montserrat.className)}>
             {siteConfig.name}

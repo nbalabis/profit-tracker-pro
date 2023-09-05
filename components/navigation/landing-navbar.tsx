@@ -7,24 +7,35 @@ import { siteConfig } from "@/config/site";
 import { Button } from "@/components/ui/button";
 import LandingMobileNavbar from "./landing-mobile-navbar";
 import { landingRouteConfig } from "@/config/docs";
+import { Balancer } from "react-wrap-balancer";
 
 const montserrat = Montserrat({ weight: "600", subsets: ["latin"] });
 
 const LandingNavbar = () => {
   return (
     <nav className="flex w-full items-center px-6 py-6 md:px-24">
-      <Link href="/" className="flex md:w-1/4 w-full items-center justify-start">
+      <Link
+        href="/"
+        className="flex w-full items-center justify-start md:w-1/4"
+      >
         <div className="relative mr-4 h-8 w-8">
           <Image
             fill
             alt="logo"
-            src="/images/logo.png"
+            src="/images/logo.svg"
             className="aspect-square"
           />
         </div>
-        <h1 className={cn("text-2xl font-bold", montserrat.className)}>
-          {siteConfig.name}
-        </h1>
+        <Balancer>
+          <h1
+            className={cn(
+              "text-center text-2xl font-bold",
+              montserrat.className,
+            )}
+          >
+            {siteConfig.name}
+          </h1>
+        </Balancer>
       </Link>
       <div className="hidden w-3/4 md:flex ">
         <div className="flex w-2/3 items-center justify-evenly gap-6">

@@ -26,16 +26,11 @@ const LandingNavbar = () => {
             className="aspect-square"
           />
         </div>
-        <Balancer>
-          <h1
-            className={cn(
-              "text-center text-2xl font-bold",
-              montserrat.className,
-            )}
-          >
-            {siteConfig.name}
-          </h1>
-        </Balancer>
+        <h1
+          className={cn("text-center text-2xl font-bold", montserrat.className)}
+        >
+          {siteConfig.name}
+        </h1>
       </Link>
       <div className="hidden w-3/4 md:flex ">
         <div className="flex w-2/3 items-center justify-evenly gap-6">

@@ -33,6 +33,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
+import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/components/ui/use-toast";
 import { DialogFooter } from "@/components/ui/dialog";
 import { cn, convertLocalDateToUTC } from "@/lib/utils";
@@ -52,6 +53,7 @@ const unsoldFormSchema = z.object({
     .number()
     .nonnegative({ message: "Price cannot be negative" }),
   category: z.string().nonempty({ message: "Product category is required" }),
+  notes: z.string().optional(),
 });
 
 const EditUnsoldProductForm: React.FC<EditUnsoldProductFormProps> = ({
@@ -72,6 +74,7 @@ const EditUnsoldProductForm: React.FC<EditUnsoldProductFormProps> = ({
       source_date: product?.sourceDate,
       source_price: product?.sourcePrice || 0,
       category: product?.category,
+      notes: product?.notes || "",
     },
   });
 
@@ -91,6 +94,7 @@ const EditUnsoldProductForm: React.FC<EditUnsoldProductFormProps> = ({
         sourceDate: values.source_date,
         sourcePrice: values.source_price,
         category: values.category,
+        notes: values.notes,
       });
 
       // Reset the form and close the modal
@@ -277,6 +281,25 @@ const EditUnsoldProductForm: React.FC<EditUnsoldProductFormProps> = ({
                   />
                 </div>
               </div>
+            </div>
+            <div className="space-y-2">
+              <FormField
+                control={form.control}
+                name="notes"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Notes</FormLabel>
+                    <FormControl>
+                      <Textarea
+                        {...field}
+                        placeholder="Storage location, special instructions, etc."
+                        disabled={isLoading}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
             </div>
           </div>
         </div>

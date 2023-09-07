@@ -35,7 +35,7 @@ const LandingMobileNavbar = () => {
               <Image
                 fill
                 alt="logo"
-                src="/images/logo.png"
+                src="/images/logo.svg"
                 className="aspect-square"
               />
             </div>

@@ -13,7 +13,8 @@ export async function POST(req: Request) {
   try {
     const { userId } = auth();
     const body = await req.json();
-    const { name, storeId, source, sourceDate, sourcePrice, category } = body;
+    const { name, storeId, source, sourceDate, sourcePrice, category, notes } =
+      body;
 
     if (!userId) {
       return new NextResponse("Unauthorized", { status: 401 });
@@ -42,6 +43,7 @@ export async function POST(req: Request) {
         sourceDate,
         sourcePrice,
         category,
+        notes,
       },
     });
 
@@ -133,6 +135,7 @@ export async function PUT(req: Request) {
       tax,
       shippingFee,
       miscFee,
+      notes,
     } = body;
 
     // Check if user is logged in and owns the store containing the product
@@ -171,6 +174,7 @@ export async function PUT(req: Request) {
         tax,
         shippingFee,
         miscFee,
+        notes,
       },
     });
 

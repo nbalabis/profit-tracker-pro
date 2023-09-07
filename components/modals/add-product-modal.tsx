@@ -41,6 +41,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
 import { useProModal } from "@/hooks/use-pro-modal";
+import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/components/ui/use-toast";
 import { categories, sources } from "@/config/selectOptions";
 import { useAddProductModal } from "@/hooks/use-add-product-modal";
@@ -54,6 +55,7 @@ const formSchema = z.object({
     .number()
     .nonnegative({ message: "Price cannot be negative" }),
   category: z.string().nonempty({ message: "Product category is required" }),
+  notes: z.string().optional(),
 });
 
 const AddProductModal = () => {
@@ -74,6 +76,7 @@ const AddProductModal = () => {
       sourceDate: new Date(),
       sourcePrice: 0,
       category: "",
+      notes: "",
     },
   });
 
@@ -90,6 +93,7 @@ const AddProductModal = () => {
         sourceDate: values.sourceDate,
         sourcePrice: values.sourcePrice,
         category: values.category,
+        notes: values.notes,
       });
 
       form.reset();
@@ -289,6 +293,25 @@ const AddProductModal = () => {
                       />
                     </div>
                   </div>
+                </div>
+                <div className="space-y-2">
+                  <FormField
+                    control={form.control}
+                    name="notes"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Notes</FormLabel>
+                        <FormControl>
+                          <Textarea
+                            {...field}
+                            placeholder="Storage location, special instructions, etc."
+                            disabled={isLoading}
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
                 </div>
               </div>
             </div>

@@ -32,6 +32,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
+import { Textarea } from "@/components/ui/textarea";
 import { DialogFooter } from "@/components/ui/dialog";
 import { cn, convertLocalDateToUTC } from "@/lib/utils";
 import { categories, channels, sources } from "@/config/selectOptions";
@@ -65,6 +66,7 @@ const soldFormSchema = z.object({
   misc_fees: z.coerce
     .number()
     .nonnegative({ message: "Fee cannot be negative" }),
+  notes: z.string().optional(),
 });
 
 const EditSoldProductForm: React.FC<EditSoldProductFormProps> = ({
@@ -92,6 +94,7 @@ const EditSoldProductForm: React.FC<EditSoldProductFormProps> = ({
       tax: product?.tax || 0,
       shipping_fees: product?.shippingFee || 0,
       misc_fees: product?.miscFee || 0,
+      notes: product?.notes || "",
     },
   });
 
@@ -118,6 +121,7 @@ const EditSoldProductForm: React.FC<EditSoldProductFormProps> = ({
         tax: values.tax,
         shippingFee: values.shipping_fees,
         miscFee: values.misc_fees,
+        notes: values.notes,
       });
 
       //Reset the form and close the modal
@@ -477,6 +481,25 @@ const EditSoldProductForm: React.FC<EditSoldProductFormProps> = ({
                   />
                 </div>
               </div>
+            </div>
+            <div className="space-y-2">
+              <FormField
+                control={form.control}
+                name="notes"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Notes</FormLabel>
+                    <FormControl>
+                      <Textarea
+                        {...field}
+                        placeholder="Storage location, special instructions, etc."
+                        disabled={isLoading}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
             </div>
           </div>
         </div>

@@ -135,6 +135,7 @@ export async function PUT(req: Request) {
       tax,
       shippingFee,
       miscFee,
+      notes,
     } = body;
 
     // Check if user is logged in and owns the store containing the product
@@ -173,6 +174,7 @@ export async function PUT(req: Request) {
         tax,
         shippingFee,
         miscFee,
+        notes,
       },
     });
 

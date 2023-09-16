@@ -1,4 +1,5 @@
 import { getStoreById } from "@/actions/stores";
+import TempPage from "./tempPage";
 
 interface ExpensesPageProps {
   params: { storeId: string };
@@ -12,7 +13,7 @@ const ExpensesPage: React.FC<ExpensesPageProps> = async ({ params }) => {
 
   return (
     <div className="p-3 md:p-6">
-      <h1>Store: {store.id}</h1>
+      <TempPage />
     </div>
   );
 };

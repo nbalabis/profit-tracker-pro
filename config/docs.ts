@@ -1,4 +1,10 @@
-import { LayoutDashboard, Package, Settings, Store } from "lucide-react";
+import {
+  LayoutDashboard,
+  Package,
+  Settings,
+  Store,
+  Receipt,
+} from "lucide-react";
 
 export const routeConfig = [
   {
@@ -18,6 +24,15 @@ export const routeConfig = [
     isStoreSpecific: true,
     color: "secondary",
     description: "Add, edit, and manage your products",
+  },
+  {
+    label: "Expenses",
+    icon: Receipt,
+    mainNav: true,
+    href: "/expenses",
+    isStoreSpecific: true,
+    color: "secondary",
+    description: "Add and manage your expenses",
   },
   {
     label: "Settings",

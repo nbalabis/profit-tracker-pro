@@ -1,12 +1,13 @@
 "use client";
 
 import * as z from "zod";
+import axios from "axios";
 import { useState } from "react";
 import { format } from "date-fns";
 import { useForm } from "react-hook-form";
-import { useRouter } from "next/navigation";
 import { CalendarIcon } from "lucide-react";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useParams, useRouter } from "next/navigation";
 
 import {
   Form,
@@ -45,6 +46,7 @@ const formSchema = z.object({
 const AddExpenseModal = () => {
   const router = useRouter();
   const { toast } = useToast();
+  const { storeId } = useParams();
   const modal = useAddExpenseModal();
 
   const [isLoading, setIsLoading] = useState(false);
@@ -63,8 +65,12 @@ const AddExpenseModal = () => {
   async function onSubmit(values: z.infer<typeof formSchema>) {
     try {
       setIsLoading(true);
+      values.date.setHours(0, 0, 0, 0);
 
-      console.log(values);
+      const respones = await axios.post("/api/expense", {
+        ...values,
+        storeId,
+      });
 
       form.reset();
       modal.onClose();

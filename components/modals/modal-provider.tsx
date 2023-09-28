@@ -7,6 +7,7 @@ import AddProductModal from "./add-product-modal";
 import AddExpenseModal from "./add-expense-modal";
 import EditProductModal from "./edit-product-modal";
 import SoldPorductModal from "./sold-product-modal";
+import EditExpenseModal from "./edit-expense-modal";
 
 export const ModalProvider = () => {
   const [isMounted, setIsMounted] = useState(false);
@@ -23,6 +24,7 @@ export const ModalProvider = () => {
       <EditProductModal />
       <SoldPorductModal />
       <AddExpenseModal />
+      <EditExpenseModal />
     </>
   );
 };

@@ -2,18 +2,16 @@
 
 import { Row } from "@tanstack/react-table";
 import type { Expense } from "@prisma/client";
-import { DollarSign, MoreHorizontal, Pen, Trash } from "lucide-react";
+import { MoreHorizontal, Pen, Trash } from "lucide-react";
 
 import {
   DropdownMenu,
   DropdownMenuTrigger,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuSeparator,
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
-import { useSoldProductModal } from "@/hooks/use-sold-product-modal";
-import { useEditProductModal } from "@/hooks/use-edit-product-modal";
+import { useEditExpenseModal } from "@/hooks/use-edit-expense-modal";
 import axios from "axios";
 import { useToast } from "@/components/ui/use-toast";
 import { useRouter } from "next/navigation";
@@ -27,8 +25,7 @@ const ExpenseTableRowActions: React.FC<ExpenseTableRowActionsProps> = ({
 }) => {
   const { toast } = useToast();
   const router = useRouter();
-  const soldProductModal = useSoldProductModal();
-  const editProductModal = useEditProductModal();
+  const editExpenseModal = useEditExpenseModal();
 
   /* DELETE HANDLER */
   const handleDelete = async () => {
@@ -61,7 +58,9 @@ const ExpenseTableRowActions: React.FC<ExpenseTableRowActionsProps> = ({
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end">
-          <DropdownMenuItem onClick={() => editExpenseModal.onOpen()}>
+          <DropdownMenuItem
+            onClick={() => editExpenseModal.onOpen(row.original)}
+          >
             <Pen className="mr-2 h-3.5 w-3.5 text-muted-foreground/70" />
             Edit
           </DropdownMenuItem>

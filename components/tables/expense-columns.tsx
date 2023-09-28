@@ -38,7 +38,7 @@ const date: ColumnDef<Expense> = {
   accessorKey: "date",
   header: ({ column }) => (
     <div className="text-center">
-      <SortedColumnHeader column={column} title="Purchase Date" />
+      <SortedColumnHeader column={column} title="Purchase Date" initialSort />
     </div>
   ),
   cell: ({ row }) => {

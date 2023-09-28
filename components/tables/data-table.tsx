@@ -28,12 +28,14 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { DataTablePagination } from "./data-table-pagination";
 import { useAddProductModal } from "@/hooks/use-add-product-modal";
+import { useAddExpenseModal } from "@/hooks/use-add-expense-modal";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
   withSearch?: boolean;
-  addBtnForStore?: Store;
+  addProductBtn?: Store;
+  addExpenseBtn?: Store;
   pagination?: "simple" | "full";
 }
 
@@ -41,10 +43,12 @@ export function DataTable<TData, TValue>({
   columns,
   data,
   withSearch = false,
-  addBtnForStore,
+  addProductBtn,
+  addExpenseBtn,
   pagination,
 }: DataTableProps<TData, TValue>) {
   const addProductModal = useAddProductModal();
+  const addExpenseModal = useAddExpenseModal();
 
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     [],
@@ -86,10 +90,19 @@ export function DataTable<TData, TValue>({
             }}
             className="max-w-sm"
           />
-          {addBtnForStore && (
+          {addProductBtn && (
             <Button
               size="icon"
               onClick={() => addProductModal.onOpen()}
+              className="aspect-square"
+            >
+              <Plus className="h-4 w-4" />
+            </Button>
+          )}
+          {addExpenseBtn && (
+            <Button
+              size="icon"
+              onClick={() => addExpenseModal.onOpen()}
               className="aspect-square"
             >
               <Plus className="h-4 w-4" />

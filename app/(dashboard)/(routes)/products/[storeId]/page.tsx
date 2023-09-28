@@ -1,7 +1,7 @@
+import { getStoreById } from "@/actions/stores";
+import { getAllProducts } from "@/actions/products";
 import { DataTable } from "@/components/tables/data-table";
 import { overviewProductsColumns } from "@/components/tables/product-columns";
-import { getAllProducts } from "@/actions/products";
-import { getStoreById } from "@/actions/stores";
 
 interface ProductPageProps {
   params: { storeId: string };
@@ -18,7 +18,7 @@ const ProductsPage: React.FC<ProductPageProps> = async ({ params }) => {
       <DataTable
         columns={overviewProductsColumns}
         data={products}
-        addBtnForStore={store}
+        addProductBtn={store}
         withSearch
         pagination="full"
       />

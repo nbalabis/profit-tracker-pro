@@ -1,4 +1,3 @@
-import TempPage from "./tempPage";
 import { getStoreById } from "@/actions/stores";
 import { getAllExpenses } from "@/actions/expenses";
 import { DataTable } from "@/components/tables/data-table";
@@ -22,7 +21,7 @@ const ExpensesPage: React.FC<ExpensesPageProps> = async ({ params }) => {
       <DataTable
         columns={expenseColumns}
         data={expenses}
-        addBtnForStore={store}
+        addExpenseBtn={store}
         withSearch
         pagination="full"
       />

@@ -23,3 +23,29 @@ export async function getAllExpenses(storeId: string): Promise<Expense[]> {
   }
   return [];
 }
+
+/* GET AN EXPENSE BY ID */
+export async function getExpenseById(
+  expenseId: string,
+): Promise<Expense | null> {
+  try {
+    // Check if the user is logged in
+    const { userId } = auth();
+    if (!userId) return null;
+
+    // Get the expense by ID
+    const expense = await prismadb.expense.findUnique({
+      where: { id: expenseId },
+    });
+    if (!expense) return null;
+
+    // Check if the user owns the store containing the expense
+    const store = await getStoreById(expense.storeId);
+    if (!store) return null;
+
+    return expense;
+  } catch (error) {
+    console.log("[GET_EXPENSE_ERROR]", error);
+  }
+  return null;
+}

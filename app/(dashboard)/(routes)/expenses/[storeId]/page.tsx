@@ -15,9 +15,6 @@ const ExpensesPage: React.FC<ExpensesPageProps> = async ({ params }) => {
 
   return (
     <div className="p-3 md:p-6">
-      {/* this is where the add btn is */}
-      {/* <TempPage /> */}
-
       <DataTable
         columns={expenseColumns}
         data={expenses}

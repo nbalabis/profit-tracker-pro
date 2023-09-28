@@ -5,7 +5,7 @@ import { ColumnDef } from "@tanstack/react-table";
 import type { Expense } from "@prisma/client";
 import { formatDate, formatPrice } from "@/lib/utils";
 // TODO: Add ExpenseTableRowActions
-// import ProductTableRowActions from "./product-table-row-actions";
+import ExpenseTableRowActions from "./expense-table-row-actions";
 import SortedColumnHeader from "./sorted-column-header";
 
 const title: ColumnDef<Expense> = {
@@ -47,4 +47,18 @@ const date: ColumnDef<Expense> = {
   },
 };
 
-export const expenseColumns: ColumnDef<Expense>[] = [title, date, price];
+const actions: ColumnDef<Expense> = {
+  id: "actions",
+  cell: ({ row }) => (
+    <div className="text-right">
+      <ExpenseTableRowActions row={row} />
+    </div>
+  ),
+};
+
+export const expenseColumns: ColumnDef<Expense>[] = [
+  title,
+  date,
+  price,
+  actions,
+];

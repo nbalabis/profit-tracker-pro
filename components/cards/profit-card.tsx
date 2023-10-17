@@ -1,4 +1,4 @@
-import { Product } from "@prisma/client";
+import { Expense, Product } from "@prisma/client";
 import { TrendingUp } from "lucide-react";
 
 import OverviewCard from "@/components/ui/overview-card";
@@ -10,16 +10,21 @@ import {
 
 interface ProfitCardProps {
   products: Product[];
+  expenses: Expense[];
   timeFrame: string;
 }
 
-const ProfitCard: React.FC<ProfitCardProps> = ({ products, timeFrame }) => {
+const ProfitCard: React.FC<ProfitCardProps> = ({
+  products,
+  expenses,
+  timeFrame,
+}) => {
   // Calculate total profit this period
-  const profit = calculateProfit(products, timeFrame);
-  const formattedRevenue = formatPrice(profit);
+  const profit = calculateProfit(products, expenses, timeFrame);
+  const formattedProfit = formatPrice(profit);
 
   // Calculate the change in profit from the previous period
-  const percentChange = calculatePercentProfitChange(products, timeFrame);
+  const percentChange = calculatePercentProfitChange(products, expenses, timeFrame);
   const formattedPercentage =
     percentChange !== null
       ? formatPercentage(percentChange, true)
@@ -29,7 +34,7 @@ const ProfitCard: React.FC<ProfitCardProps> = ({ products, timeFrame }) => {
     <OverviewCard
       title={`Profit This ${capitalize(timeFrame)}`}
       Icon={TrendingUp}
-      value={formattedRevenue}
+      value={formattedProfit}
       change={`${formattedPercentage} last ${timeFrame}`}
     />
   );

@@ -1,6 +1,6 @@
-import { Product } from "@prisma/client";
+import { Expense, Product } from "@prisma/client";
 
-import { filterProductsByTimeFrame } from "./utils";
+import { filterProductsByTimeFrame, filterExpensesByTimeFrame } from "./utils";
 
 /* CALCULATE TOTAL REVENUE FOR GIVEN TIME PERIOD */
 export function calculateTotalRevenue(
@@ -64,12 +64,13 @@ export function calculatePercentRevenueChange(
 /* CALCULATE TOTAL PROFITS FOR GIVEN TIME PERIOD */
 export const calculateProfit = (
   products: Product[],
+  expenses: Expense[],
   timeFrame: string,
   endDate?: Date,
 ): number => {
   let profit = 0;
 
-  // Get lists of filtered products
+  // Get lists of filtered products and expenses
   const filteredProductsBySourceDate = filterProductsByTimeFrame(
     products,
     timeFrame,
@@ -80,6 +81,11 @@ export const calculateProfit = (
     products,
     timeFrame,
     "saleDate",
+    endDate,
+  );
+  const filteredExpenses = filterExpensesByTimeFrame(
+    expenses,
+    timeFrame,
     endDate,
   );
 
@@ -98,16 +104,20 @@ export const calculateProfit = (
     profit += (product.salePrice || 0) - totalFees;
   });
 
+  // For expenses within the time period, subtract it from the total profit
+  filteredExpenses.forEach((expense) => (profit -= expense.price));
+
   return profit;
 };
 
 /* CALCULATE PERCENT CHANGE IN REVENUE FOR GIVEN TIME PERIOD */
 export const calculatePercentProfitChange = (
   products: Product[],
+  expenses: Expense[],
   timeFrame: string,
 ): number | null => {
   // Calculate profit for current time period
-  const currentProfit = calculateProfit(products, timeFrame);
+  const currentProfit = calculateProfit(products, expenses, timeFrame);
 
   // Determine previous time period endDate
   const endDate = new Date();
@@ -127,7 +137,7 @@ export const calculatePercentProfitChange = (
   }
 
   // Calculate profit for previous time period
-  const prevProfit = calculateProfit(products, timeFrame, endDate);
+  const prevProfit = calculateProfit(products, expenses, timeFrame, endDate);
 
   if (prevProfit === 0) {
     return null; // Handle divide by zero
@@ -140,11 +150,12 @@ export const calculatePercentProfitChange = (
 /* CALCULATE ROI FOR GIVEN TIME PERIOD */
 export const calculateROI = (
   products: Product[],
+  expenses: Expense[],
   timeFrame: string,
   endDate?: Date,
 ): number | null => {
   // Calculate profit for current time period
-  const profit = calculateProfit(products, timeFrame, endDate);
+  const profit = calculateProfit(products, expenses, timeFrame, endDate);
 
   // Get products sourced and sold within the time period
   const productsSourced = filterProductsByTimeFrame(
@@ -161,8 +172,8 @@ export const calculateROI = (
   );
 
   // Calculate total expenses for this time period
-  let expenses = 0;
-  productsSourced.forEach((product) => (expenses += product.sourcePrice));
+  let totalExpenses = 0;
+  productsSourced.forEach((product) => (totalExpenses += product.sourcePrice));
   productsSold.forEach((product) => {
     const totalFees =
       (product.shippingFee || 0) +
@@ -170,25 +181,26 @@ export const calculateROI = (
       (product.miscFee || 0) +
       (product.platformFee || 0);
 
-    expenses += totalFees;
+    totalExpenses += totalFees;
   });
 
-  if (expenses === 0) {
+  if (totalExpenses === 0) {
     return null; // Handle divide by zero
   }
 
   // Calculate and return ROI
-  const roi = (profit / expenses) * 100;
+  const roi = (profit / totalExpenses) * 100;
   return roi;
 };
 
 /* CALCULATE PERCENT CHANGE IN ROI FOR GIVEN TIME PERIOD */
 export const calculatePercentROIChange = (
   products: Product[],
+  expenses: Expense[],
   timeFrame: string,
 ): number | null => {
   // Calculate ROI for current time period
-  const currentROI = calculateROI(products, timeFrame);
+  const currentROI = calculateROI(products, expenses, timeFrame);
 
   if (currentROI === null) {
     return null;
@@ -212,7 +224,7 @@ export const calculatePercentROIChange = (
   }
 
   // Calculate ROI for previous time period
-  const prevROI = calculateROI(products, timeFrame, endDate);
+  const prevROI = calculateROI(products, expenses, timeFrame, endDate);
 
   if (prevROI === null) {
     return null; // Handle divide by zero

@@ -1,4 +1,4 @@
-import { Product } from "@prisma/client";
+import { Expense, Product } from "@prisma/client";
 import { twMerge } from "tailwind-merge";
 import { type ClassValue, clsx } from "clsx";
 
@@ -117,4 +117,42 @@ export const filterProductsByTimeFrame = (
   });
 
   return filteredProducts;
+};
+
+/* FILTER EXPENSES BY TIMEFRAME */
+export const filterExpensesByTimeFrame = (
+  expenses: Expense[],
+  timeFrame: string,
+  endDate?: Date,
+): Expense[] => {
+  // Set start and end dates for time period
+  const end = endDate || new Date();
+  end.setHours(0, 0, 0, 0);
+  let start = new Date(end);
+  switch (timeFrame) {
+    case "week":
+      start.setDate(end.getDate() - 7);
+      break;
+    case "month":
+      start.setMonth(end.getMonth() - 1);
+      break;
+    case "year":
+      start.setFullYear(end.getFullYear() - 1);
+      break;
+    default:
+      throw new Error("Invalid timeframe");
+  }
+
+  // Go through each expense
+  const filteredExpenses = expenses.filter((expense) => {
+    // Set expense time to midnight
+    expense.date.setHours(0, 0, 0, 0);
+
+    // If the expense was purchased within the time period, add it to the list
+    if (expense.date <= end && expense.date > start) {
+      return expense;
+    }
+  });
+
+  return filteredExpenses;
 };

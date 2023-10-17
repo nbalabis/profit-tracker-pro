@@ -1,16 +1,20 @@
-import { Product } from "@prisma/client";
+import { Expense, Product } from "@prisma/client";
 
+import {
+  filterExpensesByTimeFrame,
+  filterProductsByTimeFrame,
+} from "@/lib/utils";
 import { DataTable } from "./data-table";
-import { filterProductsByTimeFrame } from "@/lib/utils";
 import { transactionColumns } from "./transaction-columns";
 
 interface TrasnactionsTableProps {
   products: Product[];
+  expenses: Expense[];
   timeFrame: string;
 }
 
 export type Transaction = {
-  productId: string;
+  transactionId: string;
   name: string;
   categoryValue: string;
   action: string;
@@ -20,10 +24,11 @@ export type Transaction = {
 
 const TransactionsTable: React.FC<TrasnactionsTableProps> = ({
   products,
+  expenses,
   timeFrame,
 }) => {
   // Get transaction data
-  const transactions = getTransactions(products, timeFrame);
+  const transactions = getTransactions(products, expenses, timeFrame);
 
   return (
     <DataTable
@@ -36,6 +41,7 @@ const TransactionsTable: React.FC<TrasnactionsTableProps> = ({
 
 const getTransactions = (
   products: Product[],
+  expenses: Expense[],
   timeFrame: string,
 ): Transaction[] => {
   // Initialize transaction data
@@ -55,10 +61,13 @@ const getTransactions = (
     "saleDate",
   );
 
+  // Filter expenses in timeFrame
+  const filteredExpenses = filterExpensesByTimeFrame(expenses, timeFrame);
+
   // Add sourced products to transactions
   sourcedProducts.forEach((product) => {
     transactions.push({
-      productId: product.id,
+      transactionId: product.id,
       name: product.name,
       categoryValue: product.category,
       action: "Purchased",
@@ -71,7 +80,7 @@ const getTransactions = (
   soldProducts.forEach((product) => {
     if (product.saleDate && product.salePrice) {
       transactions.push({
-        productId: product.id,
+        transactionId: product.id,
         name: product.name,
         categoryValue: product.category,
         action: "Sold",
@@ -79,6 +88,18 @@ const getTransactions = (
         price: product.salePrice,
       });
     }
+  });
+
+  // Add expenses to transactions
+  filteredExpenses.forEach((expense) => {
+    transactions.push({
+      transactionId: expense.id,
+      name: expense.title,
+      categoryValue: "expense",
+      action: "Expense",
+      actionDate: expense.date,
+      price: expense.price,
+    });
   });
 
   return transactions;

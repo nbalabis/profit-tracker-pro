@@ -1,5 +1,6 @@
 "use client";
 
+import { Receipt } from "lucide-react";
 import { ColumnDef } from "@tanstack/react-table";
 
 import { Transaction } from "./transactions-table";
@@ -20,7 +21,7 @@ const name: ColumnDef<Transaction> = {
     const category = categories.find(
       (category) => category.value === row.original.categoryValue,
     );
-    const Icon = category?.icon;
+    let Icon = category?.icon || Receipt;
 
     return (
       <div className="flex flex-row items-center">

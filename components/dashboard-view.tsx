@@ -99,11 +99,15 @@ const DashboardView: React.FC<DashboardViewProps> = ({
                 Transactions
               </CardTitle>
               <CardDescription>
-                All products bought/sold in the last {timeFrame}
+                All expenses and products bought/sold in the last {timeFrame}
               </CardDescription>
             </CardHeader>
             <CardContent className="px-0">
-              <TransactionsTable products={products} timeFrame={timeFrame} />
+              <TransactionsTable
+                products={products}
+                expenses={expenses}
+                timeFrame={timeFrame}
+              />
             </CardContent>
           </div>
         </div>

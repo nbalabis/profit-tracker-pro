@@ -156,8 +156,8 @@ export const calculateROI = (
 ): number | null => {
   // Calculate profit for current time period
   const profit = calculateProfit(products, expenses, timeFrame, endDate);
-
-  // Get products sourced and sold within the time period
+  
+  // Get products sourced and sold and expenses within the time period
   const productsSourced = filterProductsByTimeFrame(
     products,
     timeFrame,
@@ -170,9 +170,15 @@ export const calculateROI = (
     "saleDate",
     endDate,
   );
+  const filteredExpenses = filterExpensesByTimeFrame(
+    expenses,
+    timeFrame,
+    endDate,
+  );
 
   // Calculate total expenses for this time period
   let totalExpenses = 0;
+  filteredExpenses.forEach((expense) => (totalExpenses += expense.price));
   productsSourced.forEach((product) => (totalExpenses += product.sourcePrice));
   productsSold.forEach((product) => {
     const totalFees =

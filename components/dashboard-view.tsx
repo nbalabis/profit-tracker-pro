@@ -61,7 +61,11 @@ const DashboardView: React.FC<DashboardViewProps> = ({
             expenses={expenses}
             timeFrame={timeFrame}
           />
-          {/* <ROICard products={products} timeFrame={timeFrame} /> */}
+          <ROICard
+            products={products}
+            expenses={expenses}
+            timeFrame={timeFrame}
+          />
           <SalesCard products={products} timeFrame={timeFrame} />
         </div>
         <div className="grid grid-cols-1 gap-3 md:gap-6 lg:grid-cols-2 xl:grid-cols-3">

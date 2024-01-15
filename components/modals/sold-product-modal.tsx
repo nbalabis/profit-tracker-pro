@@ -163,7 +163,7 @@ const SoldProductModal = () => {
                   render={({ field }) => (
                     <FormItem className="flex w-full flex-col">
                       <FormLabel>Sale Date</FormLabel>
-                      <Popover>
+                      <Popover modal={true}>
                         <PopoverTrigger asChild>
                           <FormControl>
                             <Button

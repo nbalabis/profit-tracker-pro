@@ -195,7 +195,7 @@ const AddProductModal = () => {
                         render={({ field }) => (
                           <FormItem className="w-1/2">
                             <FormLabel>Source Date</FormLabel>
-                            <Popover>
+                            <Popover modal={true}>
                               <PopoverTrigger asChild>
                                 <FormControl>
                                   <Button

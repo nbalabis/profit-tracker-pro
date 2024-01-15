@@ -212,7 +212,7 @@ const EditSoldProductForm: React.FC<EditSoldProductFormProps> = ({
                     render={({ field }) => (
                       <FormItem className="w-1/2">
                         <FormLabel>Source Date</FormLabel>
-                        <Popover>
+                        <Popover modal={true}>
                           <PopoverTrigger asChild>
                             <FormControl>
                               <Button
@@ -333,7 +333,7 @@ const EditSoldProductForm: React.FC<EditSoldProductFormProps> = ({
                     render={({ field }) => (
                       <FormItem className="flex w-full flex-col">
                         <FormLabel>Sale Date</FormLabel>
-                        <Popover>
+                        <Popover modal={true}>
                           <PopoverTrigger asChild>
                             <FormControl>
                               <Button
